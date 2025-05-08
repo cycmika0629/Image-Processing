@@ -431,9 +431,9 @@ $ tree -L 2
 ## Bonus
 *    Upload project to github。(需附上project repo) [ref link](https://github.com/twtrubiks/Git-Tutorials)  
         
-比較完整的git/github教學:
+     * 比較完整的git/github教學:
 
-[![Git 和 GitHub 零基礎快速上手](https://img.youtube.com/vi/FKXRiAiQFiY/0.jpg)](https://www.youtube.com/watch?v=FKXRiAiQFiY)
+       [![Git 和 GitHub 零基礎快速上手](https://img.youtube.com/vi/FKXRiAiQFiY/0.jpg)](https://www.youtube.com/watch?v=FKXRiAiQFiY)
 
 *    More image filters
         *    fisheye filter
