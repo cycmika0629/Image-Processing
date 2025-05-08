@@ -362,8 +362,8 @@ int main(){
 ## Project Setup
 ```bash=
 # login 140.113.201.197 only
-$ git clone https://github.com/steven109511094/NYCU-OOP-Final-Project-Image-Processing.git
-$ cd NYCU-OOP-Final-Project-Image-Processing/
+$ git clone https://github.com/therealczr15/2025_NYCU_OOPFP_Image_Processing.git
+$ cd 2025_NYCU_OOPFP_Image_Processing/
 
 # install the third party package
 $ make install
