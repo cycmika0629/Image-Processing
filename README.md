@@ -185,14 +185,12 @@ Image *img1 = new GrayImage();
 img1->LoadImage("Image-Folder/lena.jpg");
 img1->DumpImage("img1.jpg");
 img1->Display_X_Server();
-img1->Display_CMD();
 
 
 Image *img2 = new RGBImage();
 img2->LoadImage("Image-Folder/lena.jpg");
 img2->DumpImage("img2.jpg");
 img2->Display_X_Server();
-img2->Display_CMD();
 ```
 1. img1 and img2 are pointers to base class Image.  
 2. GrayImage and RGBImage are derived classes of Image.  
