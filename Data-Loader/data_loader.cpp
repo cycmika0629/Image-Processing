@@ -225,18 +225,6 @@ void Data_Loader::Display_RGB_ASCII(int w, int h, int ***pixels){
     }
 }
 
-void Data_Loader::Display_Gray_CMD(string filename){
-    assert(File_Exists(filename));
-    string cmd = "./third-party/catimg/bin/catimg " + string(filename);
-    system(cmd.c_str());
-}
-
-void Data_Loader::Display_RGB_CMD(string filename){
-    assert(File_Exists(filename));
-    string cmd = "./third-party/catimg/bin/catimg " + string(filename);
-    system(cmd.c_str());
-}
-
 bool Data_Loader::List_Directory(string directoryPath, vector<string> &filenames) {
     struct dirent *entry;
     DIR *dp;
