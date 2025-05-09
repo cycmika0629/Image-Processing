@@ -32,8 +32,6 @@ public:
     void Display_RGB_X_Server(int w, int h, int ***pixels);
     void Display_Gray_ASCII(int w, int h, int **pixels);
     void Display_RGB_ASCII(int w, int h, int ***pixels);
-    void Display_Gray_CMD(string filename);
-    void Display_RGB_CMD(string filename);
     bool List_Directory(string directoryPath, vector<string> &filenames);
 
 private:
