@@ -1,6 +1,3 @@
-# 2025_NYCU_OOPFP_Image_Processing
-Last Updated: 2025/05/08
-
 ## ⚠️ 注意
 請妥善使用New E3上的討論區發問!
 
@@ -57,8 +54,6 @@ public:
     void Display_RGB_X_Server(int w, int h, int ***pixels);
     void Display_Gray_ASCII(int w, int h, int **pixels);
     void Display_RGB_ASCII(int w, int h, int ***pixels);
-    void Display_Gray_CMD(string filename);
-    void Display_RGB_CMD(string filename);
     bool List_Directory(string directoryPath, vector<string> &filenames);
 
 private:
@@ -103,18 +98,6 @@ data_loader提供了三種介面來展示圖片:
         void Display_RGB_ASCII(int w, int h, int ***pixels);
         ```
         ![image](https://hackmd.io/_uploads/HJvPGdiWC.png)
-
-*    3. catimg 
-        將圖片本身直接印在terminal，支援灰階及彩色圖片。
-
-        ```c=
-        void Display_Gray_CMD(string filename);
-        void Display_RGB_CMD(string filename);
-        ```
-
-        ![image](https://hackmd.io/_uploads/r1FFM_s-R.png)
-
-        該function僅吃已存在的圖片檔的檔名，並把圖片印在terminal，請搭配前面所提到的dump使用。
 
 *    filename iterator
 
