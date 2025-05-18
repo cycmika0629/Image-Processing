@@ -1,12 +1,12 @@
-#include <Image.h>
+#include "image.h"
 
-Image::Image(int width, int height):w(width), h(height){}
+Image::Image(int w, int h):width(w), height(h){}
 
 Image::~Image(){}
 
 int Image::get_width(){
-  return w;
+  return width;
 }
 int Image::get_height(){
-  return h;
+  return height;
 }

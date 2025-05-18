@@ -1,13 +1,8 @@
 #include "rgb_image.h"
-#include <iostream>
 
-RGBImage:: RGBImage() : pixels(nullptr){}
+RGBImage:: RGBImage() : Image(0,0), pixels(nullptr){}
 
-RGBImage:: RGBImage(int w, int h, int*** p){
-  width = w;
-  height = h;
-  pixels = p;
-}
+RGBImage:: RGBImage(int w, int h, int*** p) : Image(w,h), pixels(p){}
 
 RGBImage:: ~RGBImage(){
   if(pixels){
@@ -42,8 +37,8 @@ void RGBImage::Display_ASCII(){
   loader.Display_RGB_ASCII(width, height, pixels);
 }
 
-void RGBImage::Display_CMD(){
+/*void RGBImage::Display_CMD(){
   Data_Loader loader;
   loader.Display_RGB_CMD(width, height, pixels);
-}
+}*/
 

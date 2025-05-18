@@ -16,7 +16,7 @@ void ApplyGrayGaussian(int** pixels, int width, int height){}
 
 void ApplyGrayLaplacian(int** pixels, int width, int height){
   // matrix of laplacian
-  int K[3][3] = {{0,-1,0},{-1,5,1},{0,-1,0}};
+  int K[3][3] = {{-1,-1,-1},{-1,9,-1},{-1,-1,-1}};
   
   // create a new matrix to store new value
   int **output = new int*[height];
@@ -31,7 +31,7 @@ void ApplyGrayLaplacian(int** pixels, int width, int height){
         for(int y = -1; y <= 1; ++y)
 	        sum += K[x+1][y+1] * pixels[i+x][j+y];
       }
-      sum = std::clamp(sum, 0, 255);
+      sum = std::min(255,std::max(0, sum));
       output[i][j] = sum;
     }
   }
@@ -83,7 +83,7 @@ void ApplyRGBLaplacian(int*** pixels, int width, int height){
           for(int y = -1; y <= 1; ++y)
 	          sum += K[x+1][y+1] * pixels[i+x][j+y][c];
         }
-        sum = std::clamp(sum, 0, 255);
+        sum = std::min(255,std::max(0, sum));
         output[i][j][c] = sum;
       }
     }

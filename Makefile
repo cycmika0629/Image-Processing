@@ -1,6 +1,7 @@
 # ompiler & Linker settings
 CXX = g++
-CXXFLAGS = -I ./inc -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11
+CXXFLAGS = -I ./inc -I ./inc/filters -I ./bit_field_filter -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11
+
 OPTFLAGS = -march=native -flto -funroll-loops -finline-functions -ffast-math -O3
 WARNINGS = -g -Wall
 LINKER = -L/usr/X11R6/lib -lm -lpthread -lX11 -L./third-party/libjpeg -ljpeg -lpng
@@ -13,7 +14,7 @@ CHECKFLAGS = --leak-check=full -s --show-leak-kinds=all --track-origins=yes
 SRCDIR = src
 OBJDIR = obj
 INCDIR = inc
-SRCS = $(wildcard $(SRCDIR)/*.cpp)
+SRCS = $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/filters/*.cpp)
 OBJS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCS))
 DEPS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.d,$(SRCS))
 
@@ -35,6 +36,9 @@ all: $(TARGET)
 
 $(OBJDIR):
 	@mkdir $(OBJDIR)
+$(OBJDIR)/filters:
+	@mkdir -p $(OBJDIR)/filters
+
 
 Image_Processing: main.cpp $(OBJS) $(OBJDIR)/data_loader.o
 	$(VECHO) "	LD\t$@\n"
@@ -48,7 +52,7 @@ Data_Loader_Example: data_loader_demo.cpp $(OBJDIR)/data_loader.o
 -include $(DEPS)
 
 # Compilation rule for object files with automatic dependency generation
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR) Makefile
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR) $(OBJDIR)/filters Makefile
 	$(VECHO) "	CC\t$@\n"
 	$(Q)$(CXX) $(WARNINGS) $(CXXFLAGS) $(OPTFLAGS) -MMD -c $< -o $@
 
