@@ -4,14 +4,17 @@
 #include "image_encryption.h"
 #include "bit_field_filter.h"
 #include "filters/filters.h"
+#include <string>
+#include <iostream>
 
+using namespace std;
 
-int main(int argc, char *argv[]){
-    /*Image *img1 = new GrayImage();
+/*int main(int argc, char *argv[]){
+    Image *img1 = new GrayImage();
     img1->LoadImage("Image-Folder/lena.jpg");
     img1->DumpImage("img1.jpg");
     img1->Display_X_Server();
-    //img1->Display_CMD();*/
+    //img1->Display_CMD();
     
 
     Image *img2 = new RGBImage();
@@ -20,12 +23,12 @@ int main(int argc, char *argv[]){
     img2->Display_X_Server();
     //img2->Display_CMD();
 
-    /*GrayImage* gimg = dynamic_cast<GrayImage*>(img1);
+    GrayImage* gimg = dynamic_cast<GrayImage*>(img1);
     if (gimg) {
         int gray_filters = FILTER_FLIP; 
         ApplyFiltersGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), gray_filters);
         gimg->DumpImage("img1_filtered.jpg");
-    }*/
+    }
     
     RGBImage* rimg = dynamic_cast<RGBImage*>(img2);
     if (rimg) {
@@ -39,4 +42,72 @@ int main(int argc, char *argv[]){
     delete img2;
     
     return 0;
+}*/
+
+int main(int argc, char *argv[]){
+  // Enter the name and type of the image
+  string img_name;
+  int img_type;
+  cout << "Which type of image do you want?(Enter 1(Gray)/2(RGB)): ";
+  cin >> img_type;
+  cout << "Enter the name of the image in Image-Folder(.jpg/.png): ";
+  cin >> img_name;
+  img_name = "Image-Folder/" + img_name;
+  Image* img = nullptr;
+  switch(img_type){
+    /*case 1:
+      img = new GrayImage();  
+      break;*/
+    case 2:
+      img = new RGBImage();
+      break;
+  }
+  img->LoadImage(img_name);
+  img->DumpImage("img.jpg");
+  img->Display_X_Server();
+  
+  // Choose the filter type
+  int filter_type;
+  cout << "Choose the filter number(Enter 1(Flip)/2(Mosaic)/3(Gaussian)/4(Laplacian)): ";
+  cin >> filter_type;
+  int filter;
+  switch(filter_type){
+    case 1:
+      filter = FILTER_FLIP;
+      break;
+    case 2:
+      filter = FILTER_MOSAIC;
+      break;
+    case 3:
+      filter = FILTER_GAUSSIAN;
+      break;
+    case 4:
+      filter = FILTER_LAPLACIAN;
+      break;
+  }
+  
+  // Use the filter
+  
+  switch(img_type){
+    /*case 1:
+      GrayImage* gimg = dynamic_cast<GrayImage*>(img);
+      if (gimg) {
+        ApplyFiltersGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), filter);
+        gimg->DumpImage("img_filtered.jpg");
+    }
+      break;*/
+      
+    case 2:
+      RGBImage* rimg = dynamic_cast<RGBImage*>(img);
+    if (rimg) {
+        ApplyFiltersRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), filter);
+        rimg->DumpImage("img_filetred.jpg");
+        rimg->Display_X_Server(); 
+    }
+      break;
+  }
+  
+  delete img;
+  
+  return 0;
 }
