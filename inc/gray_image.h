@@ -9,7 +9,7 @@ private:
   int **pixels;
 public:
   GrayImage();
-  GrayImage(int width, int height, int **pixels);
+  GrayImage(int w, int h, int **p);
   ~GrayImage();
   bool LoadImage(string filename);
   void DumpImage(string filename);
