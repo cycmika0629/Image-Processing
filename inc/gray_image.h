@@ -11,11 +11,12 @@ public:
   GrayImage();
   GrayImage(int w, int h, int **p);
   ~GrayImage();
-  bool LoadImage(string filename) override;
-  void DumpImage(string filename) override;
-  void Displayer_X_Server() override;
-  void Display_ASCII() override;
-  void Display_CMD() override;
+  bool LoadImage(string filename);
+  void DumpImage(string filename);
+  void Displayer_X_Server();
+  void Display_ASCII();
+  void Display_CMD();
+  int **get_pixels() const {return pixels;}
 };
 
 #endif

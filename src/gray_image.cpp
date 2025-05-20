@@ -24,12 +24,12 @@ using namespace std;
   }
   void GrayImage::Displayer_X_Server(){
     Data_Loader displayer;
-    displayer.Displayer_X_Server(width, height, pixels);
+    displayer.Display_Gray_X_Server(width, height, pixels);
     return;
   }
   void GrayImage::Display_ASCII(){
     Data_Loader display;
-    display.Display_ASCII(width, height, pixels);
+    display.Display_Gray_ASCII(width, height, pixels);
     return;
   }
   /*void GrayImage::Display_CMD();*/
