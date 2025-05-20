@@ -54,7 +54,7 @@ using namespace std;
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int main(/*int argc, char *argv[]*/) {
   // === 選擇圖片類型與檔案名稱 ===
   string img_name;
   int img_type;
@@ -89,7 +89,37 @@ int main(int argc, char *argv[]) {
   }
   img->DumpImage("img.jpg");
   img->Display_X_Server();
-
+  
+  if(img_type == 2){
+    int fun;
+    cout << "Choose which functions you want to use(1: Filter, 2: Encryption): ";
+    cin >> fun;
+    if(fun == 2){
+      int num;
+      cout << "Enter 1 for encryption, 2 for decryption: ";
+      cin >> num;
+      cin.ignore();
+      RGBImage* rimg = dynamic_cast<RGBImage*>(img);
+      ImageEncryption crypto;
+      if(num == 1){
+        string msg;
+        cout << "Enter the message: ";   
+        getline(cin, msg); 
+        RGBImage* encrypted = crypto.Encrypt(msg, rimg);
+        encrypted->DumpImage("Image-Folder/encrypted_img.png");
+        encrypted->Display_X_Server();
+        delete encrypted;
+        delete img;
+        return 0;
+      }
+      else if(num == 2){
+        string msg = crypto.Decrypt(rimg);
+        cout << "Decrypted message: " << msg << endl;
+        delete img;
+        return 0;
+      }
+    }
+  }
   // === 選擇濾鏡類型 ===
   int filter_type;
   cout << "Choose the filter number(1: Flip, 2: Mosaic, 3: Gaussian, 4: Laplacian): ";

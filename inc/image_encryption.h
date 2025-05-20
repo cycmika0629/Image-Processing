@@ -1,7 +1,7 @@
 #ifndef _IMAGE_ENCRYPTION_H_
 #define _IMAGE_ENCRYPTION_H_
 #include <string>
-#inclide "rgb_image.h"
+#include "rgb_image.h"
 
 class ImageEncryption{
   public:

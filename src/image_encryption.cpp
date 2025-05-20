@@ -28,7 +28,7 @@ string BitsToString(const vector<bool> bits){
   for(int i = 0; i < len; ++i){
     char c = 0;
     for(int j = 0; j < 8; ++j){
-      c = (c<<1) | bit[32 + i*8 + j];
+      c = (c<<1) | bits[32 + i*8 + j];
     }
     msg += c;
   }
@@ -53,9 +53,9 @@ RGBImage* ImageEncryption::Encrypt(string message, RGBImage* img){
   vector<bool> bits = StringToBits(message);
   size_t bit_index = 0;
   
-  for(int i = 0; i < h && bit_index < bit.size(); ++i){
-    for(int j = 0; j < w && bit_index < bit.size(); ++j){
-      for(int c = 0; c < 3 && bit_index < bit.size(); ++c){
+  for(int i = 0; i < h && bit_index < bits.size(); ++i){
+    for(int j = 0; j < w && bit_index < bits.size(); ++j){
+      for(int c = 0; c < 3 && bit_index < bits.size(); ++c){
         p[i][j][c] &= 0xFE; // remove LSB
         p[i][j][c] |= bits[bit_index++]; // write bit into LSB
       }
@@ -68,7 +68,7 @@ RGBImage* ImageEncryption::Encrypt(string message, RGBImage* img){
   return new RGBImage(w,h,p);
 }
 
-string ImageEncryption::Decryption(RGBImage* img){
+string ImageEncryption::Decrypt(RGBImage* img){
   vector<bool> bits;
   int*** p = img->get_pixels();
   int h = img->get_height();
