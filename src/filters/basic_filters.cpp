@@ -10,7 +10,14 @@ void ApplyGrayHorizontalFlip(int** pixels, int width, int height){
   }
 }
 
-void ApplyGrayMosaic(int** pixels, int width, int height){}
+void ApplyGrayMosaic(int** pixels, int width, int height){
+  for (int i = 0; i < height; i++){
+    for (int j = 0; j < width; j++){
+      pixels[i][j] = pixels[i][j] * width * height;
+    }
+  }
+  return;
+}
 
 void ApplyGrayGaussian(int** pixels, int width, int height){}
 
@@ -58,7 +65,16 @@ void ApplyRGBHorizontalFlip(int*** pixels, int width, int height){
   }
 }
 
-void ApplyRGBMosaic(int*** pixels, int width, int height){}
+void ApplyRGBMosaic(int*** pixels, int width, int height){
+  for (int i = 0; i < height; ++i){
+    for (int j = 0; j < width; ++j){
+      for (int c = 0; c < 3; ++c){
+        pixels[i][j][c] = pixels[i][j][c] * width * height * 3;
+      }
+    }
+  }
+  return;
+}
 
 void ApplyRGBGaussian(int*** pixels, int width, int height){}
 
