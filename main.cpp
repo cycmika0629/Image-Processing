@@ -9,9 +9,7 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-int main(int argc, char *argv[]){
-=======
+
 /*int main(int argc, char *argv[]){
 >>>>>>> a2c26a1a19e962668e5f9bd58091d8c0a553b4be
     Image *img1 = new GrayImage();
