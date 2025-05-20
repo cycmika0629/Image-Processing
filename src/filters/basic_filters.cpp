@@ -11,12 +11,35 @@ void ApplyGrayHorizontalFlip(int** pixels, int width, int height){
 }
 
 void ApplyGrayMosaic(int** pixels, int width, int height){
-  for (int i = 0; i < height; i++){
-    for (int j = 0; j < width; j++){
-      pixels[i][j] = pixels[i][j] * width * height;
+  int b = std::min(width, height) / 20;
+  b = std::max(b, 1); 
+  for (int i = 0; i < height; i += b) {
+    for (int j = 0; j < width; j += b) {
+      int sum = 0;
+      int count = 0;
+      for (int p = 0; p < b; ++p) {
+        for (int q = 0; q < b; ++q) {
+          int y = i + p;
+          int x = j + q;
+          if (y < height && x < width) {
+            sum += pixels[y][x];
+            ++count;
+          }
+        }
+      }
+
+      int avg = (count > 0) ? sum / count : 0;
+      for (int p = 0; p < b; ++p) {
+        for (int q = 0; q < b; ++q) {
+          int y = i + p;
+          int x = j + q;
+          if (y < height && x < width) {
+            pixels[y][x] = avg;
+          }
+        }
+      }
     }
   }
-  return;
 }
 
 void ApplyGrayGaussian(int** pixels, int width, int height){}
