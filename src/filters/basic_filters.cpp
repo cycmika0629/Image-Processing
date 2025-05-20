@@ -64,7 +64,7 @@ void ApplyRGBGaussian(int*** pixels, int width, int height){}
 
 void ApplyRGBLaplacian(int*** pixels, int width, int height){
   // matrix of laplacian
-  int K[3][3] = {{0,-1,0},{-1,5,1},{0,-1,0}};
+  int K[3][3] = {{-1,-1,-1},{-1,9,-1},{-1,-1,-1}};
   
   // create a new matrix to store new value
   int ***output = new int**[height];
