@@ -7,11 +7,11 @@
 
 
 int main(int argc, char *argv[]){
-    /*Image *img1 = new GrayImage();
+    Image *img1 = new GrayImage();
     img1->LoadImage("Image-Folder/lena.jpg");
     img1->DumpImage("img1.jpg");
     img1->Display_X_Server();
-    //img1->Display_CMD();*/
+    //img1->Display_CMD();
     
 
     Image *img2 = new RGBImage();
@@ -20,12 +20,12 @@ int main(int argc, char *argv[]){
     img2->Display_X_Server();
     //img2->Display_CMD();
 
-    /*GrayImage* gimg = dynamic_cast<GrayImage*>(img1);
+    GrayImage* gimg = dynamic_cast<GrayImage*>(img1);
     if (gimg) {
         int gray_filters = FILTER_FLIP; 
         ApplyFiltersGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), gray_filters);
         gimg->DumpImage("img1_filtered.jpg");
-    }*/
+    }
     
     RGBImage* rimg = dynamic_cast<RGBImage*>(img2);
     if (rimg) {
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
         rimg->Display_X_Server(); 
     }
     
-    //delete img1;
+    delete img1;
     delete img2;
     
     return 0;
