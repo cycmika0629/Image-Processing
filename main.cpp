@@ -9,11 +9,8 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-int main(int argc, char *argv[]){
-=======
+
 /*int main(int argc, char *argv[]){
->>>>>>> a2c26a1a19e962668e5f9bd58091d8c0a553b4be
     Image *img1 = new GrayImage();
     img1->LoadImage("Image-Folder/lena.jpg");
     img1->DumpImage("img1.jpg");
@@ -48,70 +45,94 @@ int main(int argc, char *argv[]){
     return 0;
 }*/
 
-int main(int argc, char *argv[]){
-  // Enter the name and type of the image
+#include <iostream>
+#include <string>
+#include "gray_image.h"
+#include "rgb_image.h"
+#include "filters/filters.h"
+#include "bit_field_filter.h"
+
+using namespace std;
+
+int main(int argc, char *argv[]) {
+  // === 選擇圖片類型與檔案名稱 ===
   string img_name;
   int img_type;
   cout << "Which type of image do you want?(Enter 1(Gray)/2(RGB)): ";
   cin >> img_type;
-  cout << "Enter the name of the image in Image-Folder(.jpg/.png): ";
+  cout << "Enter the name of the image in Image-Folder (.jpg/.png): ";
   cin >> img_name;
   img_name = "Image-Folder/" + img_name;
+
   Image* img = nullptr;
-  switch(img_type){
+  switch (img_type) {
     case 1:
-      img = new GrayImage();  
+      img = new GrayImage();
       break;
     case 2:
       img = new RGBImage();
       break;
+    default:
+      cerr << "Invalid image type!" << endl;
+      return 1;
   }
-  img->LoadImage(img_name);
+
+  if (!img->LoadImage(img_name)) {
+    cerr << "Failed to load image: " << img_name << endl;
+    delete img;
+    return 1;
+  }
+  
+  if (!img) {
+  std::cerr << "Image pointer is null!" << std::endl;
+  return 1;
+  }
   img->DumpImage("img.jpg");
   img->Display_X_Server();
-  
-  // Choose the filter type
+
+  // === 選擇濾鏡類型 ===
   int filter_type;
-  cout << "Choose the filter number(Enter 1(Flip)/2(Mosaic)/3(Gaussian)/4(Laplacian)): ";
+  cout << "Choose the filter number(1: Flip, 2: Mosaic, 3: Gaussian, 4: Laplacian): ";
   cin >> filter_type;
-  int filter;
-  switch(filter_type){
-    case 1:
-      filter = FILTER_FLIP;
-      break;
-    case 2:
-      filter = FILTER_MOSAIC;
-      break;
-    case 3:
-      filter = FILTER_GAUSSIAN;
-      break;
-    case 4:
-      filter = FILTER_LAPLACIAN;
-      break;
+
+  int filter = 0;
+  switch (filter_type) {
+    case 1: filter = FILTER_FLIP; break;
+    case 2: filter = FILTER_MOSAIC; break;
+    case 3: filter = FILTER_GAUSSIAN; break;
+    case 4: filter = FILTER_LAPLACIAN; break;
+    default:
+      cerr << "Invalid filter number!" << endl;
+      delete img;
+      return 1;
   }
-  
-  // Use the filter
-  
-  switch(img_type){
-    case 1:
+
+  // === 應用濾鏡 ===
+  switch (img_type) {
+    case 1: {
       GrayImage* gimg = dynamic_cast<GrayImage*>(img);
-      if (gimg) {
-        ApplyFiltersGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), filter);
-        gimg->DumpImage("img_filtered.jpg");
-    }
+      if (!gimg) {
+      cerr << "dynamic_cast to GrayImage failed!" << std::endl;
       break;
-      
-    case 2:
+      }
+      ApplyFiltersGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), filter);
+      gimg->DumpImage("img_filtered.jpg");
+      gimg->Display_X_Server();
+      break;
+    }
+    case 2: {
       RGBImage* rimg = dynamic_cast<RGBImage*>(img);
-    if (rimg) {
-        ApplyFiltersRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), filter);
-        rimg->DumpImage("img_filetred.jpg");
-        rimg->Display_X_Server(); 
-    }
+      if (!rimg) {
+      cerr << "dynamic_cast to RGBImage failed!" << std::endl;
       break;
+      }
+      ApplyFiltersRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), filter);
+      rimg->DumpImage("img_filtered.jpg");
+      rimg->Display_X_Server();
+      break;
+    }
   }
-  
+
   delete img;
-  
   return 0;
 }
