@@ -89,33 +89,38 @@ void ApplyRGBHorizontalFlip(int*** pixels, int width, int height){
 
 void ApplyRGBMosaic(int*** pixels, int width, int height){
   int b = std::max(2, std::min(width, height) / 40);
-  for (int i = 0; i < height; ++i){
-    for (int j = 0; j < width; ++j){
-      for (int c = 0; c < 3; ++c){
-        int sum = 0, count = 0;
-        for (int p = 0; p < b; ++p){
-          for (int q = 0; q < b; ++q){
-            for (int t = 0; t < b; ++t){
-              int y = i + p;
-              int x = j + q;
-              int z = c + t;
-              if (x < width && y < height && z < 3){
-                sum += pixels[y][x][z];
-                ++count;
-              }
+  for (int i = 0; i < height; i += b){
+    for (int j = 0; j < width; j += b){
+      int sum[3] = {0, 0, 0};
+      int count = 0;
+      for (int p = 0; p < b; ++p){
+        for (int q = 0; q < b; ++q){
+          int y = i + p;
+          int x = j + q;
+          if (x < width && y < height){
+            for (int c = 0; c < 3; ++c){
+              sum[c] += pixels[y][x][c];
             }
+            count++;
           }
         }
-        int avg = (count > 0) ? sum / count : 0;
+      }
+      int avg[3];
+      if (count > 0){
+        avg[0] = sum[0] / count;
+        avg[1] = sum[1] / count;
+        avg[2] = sum[2] / count;
+      }
+      else{
+        avg[0] = 0;  avg[1] = 0;  avg[2] = 0;
+      }
         for (int p = 0; p < b; ++p){
-          for (int q = 0; q < b; ++q){
-            for (int t = 0; t < c; ++t){
-              int y = i + p;
-              int x = j + q;
-              int z = c + t;
-              if (y < height && x < width && z < 3){
-                pixels[y][x][z] = avg;
-              }
+        for (int q = 0; q < b; ++q){
+          int y = i + p;
+          int x = j + q;
+          for (int c = 0; c < 3; ++c){
+            if (x < width && y < height){
+              pixels[y][x][c] = avg[c];
             }
           }
         }
