@@ -21,6 +21,10 @@ void ApplyFiltersGray(int** pixels, int width, int height, int filter_flags){
   if(filter_flags & FILTER_FISHEYE){
     ApplyGrayFisheye(pixels, width, height);
   }
+  
+  if(filter_flags & FILTER_SWIRL){
+    ApplyGraySwirl(pixels, width, height);
+  }
 }
 
 void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags){
@@ -42,5 +46,9 @@ void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags){
   
   if(filter_flags & FILTER_FISHEYE){
     ApplyRGBFisheye(pixels, width, height);
+  }
+  
+  if(filter_flags & FILTER_SWIRL){
+    ApplyRGBSwirl(pixels, width, height);
   }
 }
