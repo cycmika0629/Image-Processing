@@ -1,6 +1,6 @@
 # ompiler & Linker settings
 CXX = g++
-CXXFLAGS = -I ./inc -I ./inc/filters -I ./bit_field_filter -I ./third-party/CImg -I/opt/homebrew/include -I ./Data-Loader -std=c++11 -I/opt/X11/include -I/opt/homebrew/opt/jpeg/include
+CXXFLAGS = -I ./inc -I ./inc/filters -I ./bit_field_filter -I ./third-party/CImg -I/opt/homebrew/include -I ./Data-Loader -std=c++11 -I/opt/X11/include -I/opt/homebrew/opt/jpeg/include 
 
 OPTFLAGS = -march=native -flto -funroll-loops -finline-functions -ffast-math -O3
 WARNINGS = -g -Wall
