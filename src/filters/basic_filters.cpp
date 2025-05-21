@@ -11,8 +11,7 @@ void ApplyGrayHorizontalFlip(int** pixels, int width, int height){
 }
 
 void ApplyGrayMosaic(int** pixels, int width, int height){
-  int b = std::min(width, height) / 20;
-  b = std::max(b, 1); 
+  int b = std::max(2, std::min(width, height) / 40);
   for (int i = 0; i < height; i += b) {
     for (int j = 0; j < width; j += b) {
       int sum = 0;

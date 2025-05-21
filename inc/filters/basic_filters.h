@@ -1,5 +1,5 @@
 #ifndef BASIC_FILTERS_H
-#define BSSIC_FILTERS_H
+#define BASIC_FILTERS_H
 
 // Gray Filters
 void ApplyGrayHorizontalFlip(int** pixels, int width, int height);

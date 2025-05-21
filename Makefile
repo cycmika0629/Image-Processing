@@ -1,10 +1,15 @@
 # ompiler & Linker settings
 CXX = g++
-CXXFLAGS = -I ./inc -I ./inc/filters -I ./bit_field_filter -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11
+CXXFLAGS = -I ./inc -I ./inc/filters -I ./bit_field_filter -I ./third-party/CImg -I/opt/homebrew/include -I ./Data-Loader -std=c++11 -I/opt/X11/include -I/opt/homebrew/opt/jpeg/include
 
 OPTFLAGS = -march=native -flto -funroll-loops -finline-functions -ffast-math -O3
 WARNINGS = -g -Wall
-LINKER = -L/usr/X11R6/lib -lm -lpthread -lX11 -L./third-party/libjpeg -ljpeg -lpng
+LINKER = -lm -lpthread -lX11 -ljpeg -lpng \
+         -L/usr/X11R6/lib \
+         -L/opt/X11/lib \
+         -L/opt/homebrew/opt/jpeg/lib \
+         -L./third-party/libjpeg
+
 
 # Valgrind for memory issue
 CHECKCC = valgrind
