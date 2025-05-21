@@ -8,6 +8,7 @@ enum FilterType{
   FILTER_GAUSSIAN = 1 << 2,  // 0100
   FILTER_LAPLACIAN = 1 << 3, // 1000
   // mabye for bonus filter
+  FILTER_FISHEYE = 1 << 4,
 };
 
 #endif

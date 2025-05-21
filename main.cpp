@@ -122,7 +122,7 @@ int main(/*int argc, char *argv[]*/) {
   }
   // === ¿ï¾ÜÂoÃèÃþ«¬ ===
   int filter_type;
-  cout << "Choose the filter number(1: Flip, 2: Mosaic, 3: Gaussian, 4: Laplacian): ";
+  cout << "Choose the filter number(1: Flip, 2: Mosaic, 3: Gaussian, 4: Laplacian, 5: FishEye): ";
   cin >> filter_type;
 
   int filter = 0;
@@ -131,6 +131,7 @@ int main(/*int argc, char *argv[]*/) {
     case 2: filter = FILTER_MOSAIC; break;
     case 3: filter = FILTER_GAUSSIAN; break;
     case 4: filter = FILTER_LAPLACIAN; break;
+    case 5: filter = FILTER_FISHEYE; break;
     default:
       cerr << "Invalid filter number!" << endl;
       delete img;
