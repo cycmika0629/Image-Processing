@@ -17,6 +17,10 @@ void ApplyFiltersGray(int** pixels, int width, int height, int filter_flags){
   if(filter_flags & FILTER_LAPLACIAN){
     ApplyGrayLaplacian(pixels, width, height);
   }
+  
+  if(filter_flags & FILTER_FISHEYE){
+    ApplyGrayFisheye(pixels, width, height);
+  }
 }
 
 void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags){
@@ -34,5 +38,9 @@ void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags){
 
   if(filter_flags & FILTER_LAPLACIAN){
     ApplyRGBLaplacian(pixels, width, height);
+  }
+  
+  if(filter_flags & FILTER_FISHEYE){
+    ApplyRGBFisheye(pixels, width, height);
   }
 }
