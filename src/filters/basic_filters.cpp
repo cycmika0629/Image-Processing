@@ -88,14 +88,40 @@ void ApplyRGBHorizontalFlip(int*** pixels, int width, int height){
 }
 
 void ApplyRGBMosaic(int*** pixels, int width, int height){
+  int b = std::max(2, std::min(width, height) / 40);
   for (int i = 0; i < height; ++i){
     for (int j = 0; j < width; ++j){
       for (int c = 0; c < 3; ++c){
-        pixels[i][j][c] = pixels[i][j][c] * width * height * 3;
+        int sum = 0, count = 0;
+        for (int p = 0; p < b; ++p){
+          for (int q = 0; q < b; ++q){
+            for (int t = 0; t < b; ++t){
+              int y = i + p;
+              int x = j + q;
+              int z = c + t;
+              if (x < width && y < height && z < 3){
+                sum += pixels[y][x][z];
+                ++count;
+              }
+            }
+          }
+        }
+        int avg = (count > 0) ? sum / count : 0;
+        for (int p = 0; p < b; ++p){
+          for (int q = 0; q < b; ++q){
+            for (int t = 0; t < c; ++t){
+              int y = i + p;
+              int x = j + q;
+              int z = c + t;
+              if (y < height && x < width && z < 3){
+                pixels[y][x][z] = avg;
+              }
+            }
+          }
+        }
       }
     }
   }
-  return;
 }
 
 void ApplyRGBGaussian(int*** pixels, int width, int height){}
