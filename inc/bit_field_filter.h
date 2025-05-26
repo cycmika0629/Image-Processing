@@ -10,6 +10,7 @@ enum FilterType{
   // mabye for bonus filter
   FILTER_FISHEYE = 1 << 4,
   FILTER_SWIRL = 1 << 5,
+  FILTER_CARTOON = 1 << 6,
 };
 
 #endif

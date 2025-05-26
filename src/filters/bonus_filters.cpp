@@ -175,3 +175,112 @@ void ApplyRGBSwirl(int ***pixels, int width, int height) {
   }
   delete[] p;
 }
+
+// ==========Cartoon Effect=========
+void ApplyGrayCartoon(int **pixels, int width, int height){
+  const int level = 32; // ¦â¶¥ 
+  const int edge = 50;
+  
+  int** quantized = new int*[height];
+  int** edge_map = new int*[height];
+  for(int i = 0; i < height; ++i){
+    quantized[i] = new int[width];
+    edge_map[i] = new int[width];
+  }
+  
+  for(int y = 0; y < height; ++y){
+    for(int x = 0; x < width; ++x){
+      quantized[y][x] = (pixels[y][x]/level) * level;
+    }
+  }
+  
+  for (int y = 1; y < height - 1; ++y) {
+    for (int x = 1; x < width - 1; ++x) {
+      int gx = 0;
+      gx += abs(pixels[y][x] - pixels[y-1][x]);
+      gx += abs(pixels[y][x] - pixels[y+1][x]);
+      gx += abs(pixels[y][x] - pixels[y][x-1]);
+      gx += abs(pixels[y][x] - pixels[y][x+1]);
+      edge_map[y][x] = gx;
+    }
+  }
+  
+  for(int y = 0; y < height; ++y){
+    for(int x = 0; x < width; ++x){
+      if(edge_map[y][x] > edge){
+        pixels[y][x] = 0;
+      }
+      else{
+        pixels[y][x] = quantized[y][x];
+      }
+    }
+  }
+  
+  for (int y = 0; y < height; ++y) {
+    delete[] quantized[y];
+    delete[] edge_map[y];
+  }
+    delete[] quantized;
+    delete[] edge_map;
+}
+
+void ApplyRGBCartoon(int ***pixels, int width, int height){
+  const int level = 64; // ¦â¶¥ 
+  const int edge = 100;
+  
+  int*** quantized = new int**[height];
+  int** edge_map = new int*[height];
+  for(int i = 0; i < height; ++i){
+    quantized[i] = new int*[width];
+    edge_map[i] = new int[width];
+    for(int j = 0; j < width; ++j){
+      quantized[i][j] = new int[3];
+      edge_map[i][j] = 0;
+    }
+  }
+  
+  // color quantization
+  for(int y = 0; y < height; ++y){
+    for(int x = 0; x < width; ++x){
+      for(int c = 0; c < 3; ++c)
+        quantized[y][x][c] = (pixels[y][x][c]/level) * level;
+    }
+  }
+  
+  // edge detection
+  for (int y = 1; y < height - 1; ++y) {
+    for (int x = 1; x < width - 1; ++x) {
+      int gx = 0;
+        for (int c = 0; c < 3; ++c) {
+          gx += abs(pixels[y][x][c] - pixels[y-1][x][c]);
+          gx += abs(pixels[y][x][c] - pixels[y+1][x][c]);
+          gx += abs(pixels[y][x][c] - pixels[y][x-1][c]);
+          gx += abs(pixels[y][x][c] - pixels[y][x+1][c]);
+        }
+      edge_map[y][x] = gx;
+    }
+  }
+  
+  for(int y = 0; y < height; ++y){
+    for(int x = 0; x < width; ++x){
+      if(edge_map[y][x] > edge){
+        for(int c = 0; c < 3; ++c)
+          pixels[y][x][c] = 0;
+      }
+      else{
+        for(int c = 0; c < 3; ++c)
+          pixels[y][x][c] = quantized[y][x][c];
+      }
+    }
+  }
+  
+  for (int y = 0; y < height; ++y) {
+    for (int x = 0; x < width; ++x) {
+      delete[] quantized[y][x];
+    }
+    delete[] quantized[y];
+    delete[] edge_map[y];
+  }
+  delete[] quantized;
+  delete[] edge_map;
+}

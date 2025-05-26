@@ -6,4 +6,7 @@ void ApplyRGBFisheye(int ***pixels, int width, int height);
 // Swirl Filter
 void ApplyGraySwirl(int **pixels, int width, int height);
 void ApplyRGBSwirl(int ***pixels, int width, int height);
+// Cartoon Effect Filter
+void ApplyGrayCartoon(int **pixels, int width, int height);
+void ApplyRGBCartoon(int ***pixels, int width, int height);
 #endif
