@@ -11,8 +11,7 @@ void ApplyGrayHorizontalFlip(int** pixels, int width, int height){
   }
 }
 
-void ApplyGrayMosaic(int** pixels, int width, int height){
-  int b = std::max(2, std::min(width, height) / 40);
+void ApplyGrayMosaic(int** pixels, int width, int height, int b){
   for (int i = 0; i < height; i += b) {
     for (int j = 0; j < width; j += b) {
       int sum = 0;
@@ -47,8 +46,7 @@ T clamp(T val, T lo, T hi) {
   return std::min(std::max(val, lo), hi);
 }
 
-void ApplyGrayGaussian(int** pixels, int width, int height){
-  float sigma = 0.8;
+void ApplyGrayGaussian(int** pixels, int width, int height, float sigma){
   int k = std::ceil(3 * sigma);
   int size = 2 * k + 1;
   float **kernel = new float*[size];
@@ -149,8 +147,7 @@ void ApplyRGBHorizontalFlip(int*** pixels, int width, int height){
   }
 }
 
-void ApplyRGBMosaic(int*** pixels, int width, int height){
-  int b = std::max(2, std::min(width, height) / 40);
+void ApplyRGBMosaic(int*** pixels, int width, int height, int b){
   for (int i = 0; i < height; i += b){
     for (int j = 0; j < width; j += b){
       int sum[3] = {0, 0, 0};
@@ -191,8 +188,7 @@ void ApplyRGBMosaic(int*** pixels, int width, int height){
   }
 }
 
-void ApplyRGBGaussian(int*** pixels, int width, int height){
-  float sigma = 0.8;
+void ApplyRGBGaussian(int*** pixels, int width, int height, float sigma){
   int k = std::ceil(3 * sigma);
   int size = 2 * k + 1;
   float ***kernel = new float**[size];

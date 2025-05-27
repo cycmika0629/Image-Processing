@@ -7,11 +7,11 @@ void ApplyFiltersGray(int** pixels, int width, int height, int filter_flags){
   }
 
   if(filter_flags & FILTER_MOSAIC){
-    ApplyGrayMosaic(pixels, width, height);
+    ApplyGrayMosaic(pixels, width, height, b);
   }
 
   if(filter_flags & FILTER_GAUSSIAN){
-    ApplyGrayGaussian(pixels, width, height);
+    ApplyGrayGaussian(pixels, width, heigh, sigma);
   }
 
   if(filter_flags & FILTER_LAPLACIAN){
@@ -37,11 +37,11 @@ void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags){
   }
 
   if(filter_flags & FILTER_MOSAIC){
-    ApplyRGBMosaic(pixels, width, height);
+    ApplyRGBMosaic(pixels, width, height, b);
   }
 
   if(filter_flags & FILTER_GAUSSIAN){
-    ApplyRGBGaussian(pixels, width, height);
+    ApplyRGBGaussian(pixels, width, height, sigma);
   }
 
   if(filter_flags & FILTER_LAPLACIAN){
