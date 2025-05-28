@@ -5,7 +5,7 @@
 #include "bonus_filters.h"
 #include "../bit_field_filter.h"
 
-void ApplyFiltersGray(int** pixels, int width, int height, int filter_flags);
-void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags);
+void ApplyGrayMosaic(int** pixels, int width, int height, int b);
+void ApplyGrayGaussian(int** pixels, int width, int height, float sigma);
 
 #endif

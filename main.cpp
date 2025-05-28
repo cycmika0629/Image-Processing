@@ -4,7 +4,8 @@
 #include "image_encryption.h"
 #include "bit_field_filter.h"
 #include "filters/filters.h"
-#include "basic_filters.h"
+#include "filters/bonus_filters.h"
+#include "filters/basic_filters.h"
 #include <string>
 #include <iostream>
 #include <map>
@@ -127,30 +128,69 @@ int main(/*int argc, char *argv[]*/) {
   }
   // === ����o������ ===
   int filter_type;
-  float param = 0; // 預設參數
   cout << "Choose the filter number:\n"
     << "1: Flip\n2: Mosaic\n3: Gaussian\n4: Laplacian\n5: FishEye\n"
     << "6: Swirl\n7: Cartoon Effect\n8: Custom Sequence\n";
   cin >> filter_type;
 
-  if (filter_type == 2) {
-    cout << "Enter mosaic block size (e.g., 8): ";
-    cin >> param;
-  } else if (filter_type == 3) {
-    cout << "Enter Gaussian sigma (e.g., 1.2): ";
-    cin >> param;
-  }
-
-
-  int filter = 0;
   switch (filter_type) {
-    case 1: filter = FILTER_FLIP; break;
-    case 2: filter = FILTER_MOSAIC; break;
-    case 3: filter = FILTER_GAUSSIAN; break;
-    case 4: filter = FILTER_LAPLACIAN; break;
-    case 5: filter = FILTER_FISHEYE; break;
-    case 6: filter = FILTER_SWIRL; break;
-    case 7: filter = FILTER_CARTOON; break;
+    case 1: // Flip
+    if (img_type == 1)
+      ApplyGrayHorizontalFlip(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    else
+      ApplyRGBHorizontalFlip(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    break;
+
+    case 2: {
+    cout << "Enter mosaic block size (e.g., 8): ";
+    int b;
+    cin >> b;
+    if (img_type == 1)
+      ApplyGrayMosaic(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), b);
+    else
+      ApplyRGBMosaic(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), b);
+    break;
+    }
+
+    case 3: {
+    cout << "Enter Gaussian sigma (e.g., 1.2): ";
+    float sigma;
+    cin >> sigma;
+    if (img_type == 1)
+      ApplyGrayGaussian(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
+    else
+      ApplyRGBGaussian(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
+    break;
+    }
+
+    case 4:
+    if (img_type == 1)
+      ApplyGrayLaplacian(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    else
+      ApplyRGBLaplacian(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    break;
+
+    case 5:
+    if (img_type == 1)
+      ApplyGrayFisheye(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    else
+      ApplyRGBFisheye(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    break;
+
+    case 6:
+    if (img_type == 1)
+      ApplyGraySwirl(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    else
+      ApplyRGBSwirl(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    break;
+
+    case 7:
+    if (img_type == 1)
+      ApplyGrayCartoon(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    else
+      ApplyRGBCartoon(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
+    break;
+
     case 8: {
       cin.ignore();
       string sequence;
@@ -171,7 +211,6 @@ int main(/*int argc, char *argv[]*/) {
         } else {
         name = f;
         }
-
       if (filter_map.find(name) == filter_map.end()) {
       cerr << "Unsupported filter: " << name << endl;
       continue;
@@ -182,131 +221,42 @@ int main(/*int argc, char *argv[]*/) {
       if (img_type == 1) {
         GrayImage* gimg = dynamic_cast<GrayImage*>(img);
         switch (type) {
-          case FILTER_FLIP:      ApplyInvertGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
+          case FILTER_FLIP:      ApplyGrayHorizontalFlip(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
           case FILTER_MOSAIC:    ApplyGrayMosaic(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), stoi(param)); break;
           case FILTER_GAUSSIAN:  ApplyGrayGaussian(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), stof(param)); break;
-          case FILTER_LAPLACIAN: ApplyLaplacianGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
-          case FILTER_FISHEYE:   ApplyFishEyeGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
-          case FILTER_SWIRL:     ApplySwirlGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
-          case FILTER_CARTOON:   ApplyCartoonGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
+          case FILTER_LAPLACIAN: ApplyGrayLaplacian(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
+          case FILTER_FISHEYE:   ApplyGrayFisheye(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
+          case FILTER_SWIRL:     ApplyGraySwirl(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
+          case FILTER_CARTOON:   ApplyGrayCartoon(gimg->get_pixels(), gimg->get_width(), gimg->get_height()); break;
           default: break;
         }
       } else if (img_type == 2) {
         RGBImage* rimg = dynamic_cast<RGBImage*>(img);
         switch (type) {
-        case FILTER_FLIP:      ApplyInvertRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
+        case FILTER_FLIP:      ApplyRGBHorizontalFlip(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
         case FILTER_MOSAIC:    ApplyRGBMosaic(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), stoi(param)); break;
         case FILTER_GAUSSIAN:  ApplyRGBGaussian(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), stof(param)); break;
-        case FILTER_LAPLACIAN: ApplyLaplacianRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
-        case FILTER_FISHEYE:   ApplyFishEyeRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
-        case FILTER_SWIRL:     ApplySwirlRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
-        case FILTER_CARTOON:   ApplyCartoonRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
+        case FILTER_LAPLACIAN: ApplyRGBLaplacian(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
+        case FILTER_FISHEYE:   ApplyRGBFisheye(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
+        case FILTER_SWIRL:     ApplyRGBSwirl(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
+        case FILTER_CARTOON:   ApplyRGBCartoon(rimg->get_pixels(), rimg->get_width(), rimg->get_height()); break;
         default: break;
+        }
       }
+      }
+      img->DumpImage("img_filtered_custom.jpg");
+      img->Display_X_Server();
+      delete img;
+      return 0;
     }
-  }
+    default:
+    cerr << "Invalid filter number!" << endl;
+    delete img;
+    return 1;
+    }
 
   img->DumpImage("img_filtered_custom.jpg");
   img->Display_X_Server();
-  break;
-  }
-
-    default:
-      cerr << "Invalid filter number!" << endl;
-      delete img;
-      return 1;
-  }
-
-  // === �����o�� ===
-  switch (img_type) {
-  case 1: {
-    GrayImage* gimg = dynamic_cast<GrayImage*>(img);
-    if (!gimg) {
-      cerr << "dynamic_cast to GrayImage failed!" << std::endl;
-      break;
-    }
-
-    switch (filter) {
-      case 1: // Flip
-        ApplyInvertGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height());
-        break;
-      case 2: { // Mosaic
-        int b;
-        cout << "Enter mosaic block size: ";
-        cin >> b;
-        ApplyGrayMosaic(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), b);
-        break;
-      }
-      case 3: { // Gaussian
-        float sigma;
-        cout << "Enter Gaussian sigma: ";
-        cin >> sigma;
-        ApplyGrayGaussian(gimg->get_pixels(), gimg->get_width(), gimg->get_height(), sigma);
-        break;
-      }
-      case 4:
-        ApplyGrayLaplacian(gimg->get_pixels(), gimg->get_width(), gimg->get_height());
-        break;
-      case 5:
-        ApplyFishEyeGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height());
-        break;
-      case 6:
-        ApplySwirlGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height());
-        break;
-      case 7:
-        ApplyCartoonGray(gimg->get_pixels(), gimg->get_width(), gimg->get_height());
-        break;
-    }
-
-    gimg->DumpImage("img_filtered.jpg");
-    gimg->Display_X_Server();
-    break;
-  }
-
-  case 2: {
-    RGBImage* rimg = dynamic_cast<RGBImage*>(img);
-    if (!rimg) {
-      cerr << "dynamic_cast to RGBImage failed!" << std::endl;
-      break;
-    }
-
-    switch (filter) {
-      case 1:
-        ApplyInvertRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height());
-        break;
-      case 2: {
-        int b;
-        cout << "Enter mosaic block size: ";
-        cin >> b;
-        ApplyRGBMosaic(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), b);
-        break;
-      }
-      case 3: {
-        float sigma;
-        cout << "Enter Gaussian sigma: ";
-        cin >> sigma;
-        ApplyRGBGaussian(rimg->get_pixels(), rimg->get_width(), rimg->get_height(), sigma);
-        break;
-      }
-      case 4:
-        ApplyRGBLaplacian(rimg->get_pixels(), rimg->get_width(), rimg->get_height());
-        break;
-      case 5:
-        ApplyFishEyeRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height());
-        break;
-      case 6:
-        ApplySwirlRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height());
-        break;
-      case 7:
-        ApplyCartoonRGB(rimg->get_pixels(), rimg->get_width(), rimg->get_height());
-        break;
-    }
-
-    rimg->DumpImage("img_filtered.jpg");
-    rimg->Display_X_Server();
-    break;
-  }
-}
 
   delete img;
   return 0;

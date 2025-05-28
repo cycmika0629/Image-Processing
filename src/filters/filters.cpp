@@ -1,7 +1,7 @@
 #include "filters.h"
 #include <iostream>
 
-void ApplyFiltersGray(int** pixels, int width, int height, int filter_flags){
+/*void ApplyFiltersGray(int** pixels, int width, int height, int filter_flags){
   if(filter_flags & FILTER_FLIP){
     ApplyGrayHorizontalFlip(pixels, width, height);
   }
@@ -60,3 +60,4 @@ void ApplyFiltersRGB(int*** pixels, int width, int height, int filter_flags){
     ApplyRGBCartoon(pixels, width, height);
   }
 }
+*/
