@@ -1,0 +1,105 @@
+[Wed May 28 19:55:17 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=8.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 19:55:27 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=4.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 19:55:32 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=1.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 19:58:56 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=40.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:00:24 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=12.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:00:32 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=1.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:00:40 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=1.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:00:46 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=2.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:00:54 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=4.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:06:42 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=2.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:07:01 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=12.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:09:02 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=1.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:09:12 2025
+] Image: 2-2.jpg
+→ Applied: Gaussian(sigma=9.000000)
+→ Output: preview_gaussian.jpg
+---------------------------------------
+[Wed May 28 20:09:54 2025
+] Image: 1-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Wed May 28 20:10:19 2025
+] Image: 3-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Wed May 28 20:10:38 2025
+] Image: 4-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Wed May 28 20:11:29 2025
+] Image: 4-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Wed May 28 20:15:50 2025
+] Image: 4-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Wed May 28 20:17:56 2025
+] Image: 2-2.jpg
+→ Applied: Encrypt(message)
+→ Output: encrypted_img.png
+---------------------------------------
+[Wed May 28 20:18:36 2025
+] Image: encrypted_img.png
+→ Applied: Decrypt(message)
+→ Output: <from current image>
+---------------------------------------
+[Wed May 28 20:19:37 2025
+] Image: 2-2.jpg
+→ Applied: Custom Sequence: flip|mosaic:8|gaussain:1.2
+→ Output: img_filtered.jpg
+---------------------------------------
