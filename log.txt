@@ -103,3 +103,33 @@
 → Applied: Custom Sequence: flip|mosaic:8|gaussain:1.2
 → Output: img_filtered.jpg
 ---------------------------------------
+[Fri May 30 14:44:47 2025
+] Image: 3-2.jpg
+→ Applied: Cartoon
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri May 30 14:45:46 2025
+] Image: 1-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri May 30 14:46:23 2025
+] Image: 1-2.jpg
+→ Applied: Swirl
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri May 30 14:55:41 2025
+] Image: 1-2.jpg
+→ Applied: Swirl
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  1 14:14:34 2025
+] Image: 1-1.jpg
+→ Applied: Swirl
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  1 14:14:52 2025
+] Image: 1-1.jpg
+→ Applied: Swirl
+→ Output: img_filtered.jpg
+---------------------------------------

@@ -1,6 +1,7 @@
 #include "filters/basic_filters.h"
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -93,46 +94,39 @@ void ApplyRGBFisheye(int ***pixels, int width, int height){
 }
 
 // ======== Swirl ========
-void ApplyGraySwirl(int **pixels, int width, int height){
-  int cx = width/2;
-  int cy = width/2;
+void ApplyGraySwirl(int **pixels, int width, int height) {
+  int cx = width / 2;
+  int cy = height / 2;
   double factor = 0.01;
-  
-  int **p = new int*[height];
-  for(int i = 0; i < height; ++i)
-    p[i] = new int[width];
-    
-  for(int y = 0; y < height; ++y){
-    for(int x = 0; x < width; ++x){
+
+  // Copy pixels safely to avoid modifying during iteration
+  vector<vector<int>> temp(height, vector<int>(width, 0));
+
+  for (int y = 0; y < height; ++y) {
+    for (int x = 0; x < width; ++x) {
       int dx = x - cx;
       int dy = y - cy;
-      double r = sqrt(pow(dx,2)+pow(dy,2));
+      double r = sqrt(dx * dx + dy * dy);
       double theta = atan2(dy, dx) + r * factor;
-      
-      int src_x = static_cast<int>(r*cos(theta) + cx);
-      int src_y = static_cast<int>(r*sin(theta) + cy);
-      
-      if(src_x >= 0 && src_x < width && src_y >= 0 && src_y < height) 
-        p[y][x] = pixels[src_y][src_x];
-      else
-        p[y][x] = 0;    
+
+      int src_x = static_cast<int>(r * cos(theta) + cx);
+      int src_y = static_cast<int>(r * sin(theta) + cy);
+
+      if (src_x >= 0 && src_x < width && src_y >= 0 && src_y < height)
+        temp[y][x] = pixels[src_y][src_x];
     }
   }
-  
-  for(int y = 0; y < height; ++y){
-    for(int x = 0; x < width; ++x)
-      pixels[y][x] = p[y][x];
-  }
-  
-  for(int i = 0; i < height; ++i)
-    delete[] p[i];
-  delete[] p;
+
+  for (int y = 0; y < height; ++y)
+    for (int x = 0; x < width; ++x)
+      pixels[y][x] = temp[y][x];
 }
+
 
 void ApplyRGBSwirl(int ***pixels, int width, int height) {
   int cx = width / 2;
   int cy = height / 2;
-  double factor = 0.01; // 控制旋轉強度，依照圖像大小調整
+  double factor = 0.01; 
 
   int ***p = new int**[height];
   for (int i = 0; i < height; ++i) {
@@ -178,7 +172,7 @@ void ApplyRGBSwirl(int ***pixels, int width, int height) {
 
 // ==========Cartoon Effect=========
 void ApplyGrayCartoon(int **pixels, int width, int height){
-  const int level = 32; // 色階 
+  const int level = 32; // 嚙賤階 
   const int edge = 50;
   
   int** quantized = new int*[height];
@@ -225,7 +219,7 @@ void ApplyGrayCartoon(int **pixels, int width, int height){
 }
 
 void ApplyRGBCartoon(int ***pixels, int width, int height){
-  const int level = 64; // 色階 
+  const int level = 64; // 嚙賤階 
   const int edge = 100;
   
   int*** quantized = new int**[height];
