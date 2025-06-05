@@ -26,7 +26,7 @@ void LogFilterUse(const string& image_name, const string& filter_info, const str
   log.close();
 }
 
-void GaussianInteractivePreview(Image* img, int img_type, const string& original_name) {
+void GaussianInteractivePreview(Image* img, int img_type, const string& original_name, int display_mode) {
   if (!img) return;
 
   string output_name = "preview_gaussian.jpg";
@@ -42,7 +42,8 @@ void GaussianInteractivePreview(Image* img, int img_type, const string& original
       ApplyRGBGaussian(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
 
     img->DumpImage(output_name);
-    img->Display_X_Server();
+    if (display_mode == 1) img->Display_X_Server();
+    else if (display_mode == 2) img->Display_ASCII();
 
     cout << "[INFO] Applied Gaussian(sigma=" << sigma << ") → " << output_name << endl;
     LogFilterUse(original_name, "Gaussian(sigma=" + to_string(sigma) + ")", output_name);
@@ -87,9 +88,21 @@ int main() {
 
     cout << "[INFO] Loaded: " << full_path << ", size: " << img->get_width() << "x" << img->get_height() << endl;
     img->DumpImage("img.jpg");
-    img->Display_X_Server();
 
-    // encryption option if RGB
+    int display_mode;
+    cout << "[INPUT] Choose display mode: 1: GUI (X_Server) / 2: ASCII Terminal Display: ";
+    cin >> display_mode;
+
+    if (display_mode == 1) {
+      img->Display_X_Server();
+      LogFilterUse(img_name, "Initial GUI display", "img.jpg");
+    } else if (display_mode == 2) {
+      img->Display_ASCII();
+      LogFilterUse(img_name, "Initial ASCII display", "img.jpg");
+    } else {
+      cout << "[WARN] Unknown display mode. Skipping initial display.\n";
+    }
+
     if (img_type == 2) {
       int choice;
       cout << "[INPUT] Do you want to use (1) Filter or (2) Encryption? ";
@@ -107,7 +120,8 @@ int main() {
           getline(cin, msg);
           RGBImage* encrypted = crypto.Encrypt(msg, rimg);
           encrypted->DumpImage("Image-Folder/encrypted_img.png");
-          encrypted->Display_X_Server();
+          if (display_mode == 1) encrypted->Display_X_Server();
+          else if (display_mode == 2) encrypted->Display_ASCII();
           LogFilterUse(img_name, "Encrypt(message)", "encrypted_img.png");
           delete encrypted;
         } else if (op == 2) {
@@ -170,7 +184,7 @@ int main() {
         log_info = "Cartoon";
         break;
       case 8:
-        GaussianInteractivePreview(img, img_type, img_name);
+        GaussianInteractivePreview(img, img_type, img_name, display_mode);
         delete img;
         continue;
       case 9: {
@@ -236,7 +250,8 @@ int main() {
     }
 
     img->DumpImage(output_name);
-    img->Display_X_Server();
+    if (display_mode == 1) img->Display_X_Server();
+    else if (display_mode == 2) img->Display_ASCII();
     cout << "[INFO] Output saved to: " << output_name << endl;
     LogFilterUse(img_name, log_info, output_name);
     delete img;
@@ -244,3 +259,4 @@ int main() {
 
   return 0;
 }
+

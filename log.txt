@@ -133,3 +133,228 @@
 → Applied: Swirl
 → Output: img_filtered.jpg
 ---------------------------------------
+[Thu Jun  5 23:58:40 2025
+] Image: 1-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:00:52 2025
+] Image: 1-1.jpg
+→ Applied: Flip
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:01:39 2025
+] Image: 1-2.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:02:34 2025
+] Image: 2-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:03:15 2025
+] Image: 2-1.jpg
+→ Applied: Flip
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:05:24 2025
+] Image: 2-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:05:48 2025
+] Image: 2-1.jpg
+→ Applied: Flip
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:07:42 2025
+] Image: 1-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:09:27 2025
+] Image: 1-1.jpg
+→ Applied: Cartoon
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:10:27 2025
+] Image: 1-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:10:49 2025
+] Image: 1-1.jpg
+→ Applied: Fisheye
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:13:08 2025
+] Image: 1-2.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:14:05 2025
+] Image: 1-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:15:03 2025
+] Image: 1-2.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:15:11 2025
+] Image: 1-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:26:57 2025
+] Image: 1-2.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:27:15 2025
+] Image: 1-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:27:50 2025
+] Image: 2-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:27:55 2025
+] Image: 2-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:28:44 2025
+] Image: 4-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:29:01 2025
+] Image: 4-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:29:30 2025
+] Image: 4-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:29:47 2025
+] Image: 4-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:30:11 2025
+] Image: 4-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:30:35 2025
+] Image: 4-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:31:22 2025
+] Image: 4-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:31:43 2025
+] Image: 4-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:33:34 2025
+] Image: 4-2.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:35:13 2025
+] Image: 4-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:35:52 2025
+] Image: 4-2.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:36:03 2025
+] Image: 4-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:36:41 2025
+] Image: 4-2.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:36:49 2025
+] Image: 4-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:37:05 2025
+] Image: 4-2.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:37:21 2025
+] Image: 4-2.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:38:29 2025
+] Image: 2-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:39:25 2025
+] Image: 2-1.jpg
+→ Applied: Mosaic(block=10)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:39:40 2025
+] Image: 2-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:39:58 2025
+] Image: 2-1.jpg
+→ Applied: Mosaic(block=10)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:40:45 2025
+] Image: 2-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:41:02 2025
+] Image: 2-1.jpg
+→ Applied: Mosaic(block=10)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:41:46 2025
+] Image: 3-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:42:36 2025
+] Image: 3-1.jpg
+→ Applied: Gaussian(sigma=10.000000)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Fri Jun  6 00:43:21 2025
+] Image: 4-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Fri Jun  6 00:43:29 2025
+] Image: 4-1.jpg
+→ Applied: Laplacian
+→ Output: img_filtered.jpg
+---------------------------------------

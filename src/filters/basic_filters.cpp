@@ -104,38 +104,43 @@ void ApplyGrayGaussian(int** pixels, int width, int height, float sigma){
 }
 
 void ApplyGrayLaplacian(int** pixels, int width, int height){
-  // matrix of laplacian
-  int K[3][3] = {{-1,-1,-1},{-1,9,-1},{-1,-1,-1}};
-  
-  // create a new matrix to store new value
+  if (width < 3 || height < 3) return;  // 避免處理過小圖像
+
+  // Laplacian kernel
+  int K[3][3] = {{-1, -1, -1}, {-1, 9, -1}, {-1, -1, -1}};
+
+  // allocate new matrix
   int **output = new int*[height];
-  for(int i = 0; i < height; ++i)
+  for(int i = 0; i < height; ++i){
     output[i] = new int[width];
-  
-  // calculate new value
-  for(int i = 1; i < height-1; ++i){
-    for(int j = 1; j < width-1; ++j){
-      int sum = 0;
-      for(int x = -1; x <= 1; ++x){
-        for(int y = -1; y <= 1; ++y)
-	        sum += K[x+1][y+1] * pixels[i+x][j+y];
-      }
-      sum = std::min(255,std::max(0, sum));
-      output[i][j] = sum;
+    for(int j = 0; j < width; ++j){
+      output[i][j] = pixels[i][j];  // 先填入原值，避免邊界未初始化
     }
   }
 
-  // change the value
-  for(int i = 1; i < height-1; ++i){
-    for(int j = 1; j < width-1; ++j)
-      pixels[i][j] = output[i][j];
+  // Apply kernel (only to inner pixels)
+  for(int i = 1; i < height - 1; ++i){
+    for(int j = 1; j < width - 1; ++j){
+      int sum = 0;
+      for(int x = -1; x <= 1; ++x){
+        for(int y = -1; y <= 1; ++y){
+          sum += K[x + 1][y + 1] * pixels[i + x][j + y];
+        }
+      }
+      output[i][j] = std::min(255, std::max(0, sum));
+    }
   }
 
-  // free
-  for(int i = 0; i < height; ++i)
+  // copy back to pixels
+  for(int i = 0; i < height; ++i){
+    for(int j = 0; j < width; ++j){
+      pixels[i][j] = output[i][j];
+    }
     delete[] output[i];
+  }
   delete[] output;
 }
+
 
 // ========== RGB Filters ==========
 void ApplyRGBHorizontalFlip(int*** pixels, int width, int height){
@@ -266,43 +271,44 @@ void ApplyRGBGaussian(int*** pixels, int width, int height, float sigma){
 }
 
 void ApplyRGBLaplacian(int*** pixels, int width, int height){
-  // matrix of laplacian
+  if (width < 3 || height < 3) return;  // too small to process safely
+
   int K[3][3] = {{-1,-1,-1},{-1,9,-1},{-1,-1,-1}};
-  
-  // create a new matrix to store new value
+
+  // allocate and initialize output
   int ***output = new int**[height];
   for(int i = 0; i < height; ++i){
-    output[i] = new int* [width];
-    for(int j = 0; j < width; ++j)
+    output[i] = new int*[width];
+    for(int j = 0; j < width; ++j){
       output[i][j] = new int[3];
+      for (int c = 0; c < 3; ++c)
+        output[i][j][c] = pixels[i][j][c]; // initialize to original values (important for borders)
+    }
   }
-  
-  // calculate new value
-  for(int i = 1; i < height-1; ++i){
-    for(int j = 1; j < width-1; ++j){
+
+  // apply Laplacian kernel (to center area only)
+  for(int i = 1; i < height - 1; ++i){
+    for(int j = 1; j < width - 1; ++j){
       for(int c = 0; c < 3; ++c){
         int sum = 0;
         for(int x = -1; x <= 1; ++x){
-          for(int y = -1; y <= 1; ++y)
-	          sum += K[x+1][y+1] * pixels[i+x][j+y][c];
+          for(int y = -1; y <= 1; ++y){
+            sum += K[x+1][y+1] * pixels[i + x][j + y][c];
+          }
         }
-        sum = std::min(255,std::max(0, sum));
-        output[i][j][c] = sum;
+        output[i][j][c] = std::min(255, std::max(0, sum));
       }
     }
   }
 
-  // change the value
-  for(int i = 1; i < height-1; ++i){
-    for(int j = 1; j < width-1; ++j)
-      for(int c = 0; c < 3; ++c)
-        pixels[i][j][c] = output[i][j][c];
-  }
-
-  // free
+  // copy output to original
   for(int i = 0; i < height; ++i){
-    for(int j = 0; j < width; ++j)
+    for(int j = 0; j < width; ++j){
+      for(int c = 0; c < 3; ++c){
+        pixels[i][j][c] = output[i][j][c];
+      }
       delete[] output[i][j];
+    }
     delete[] output[i];
   }
   delete[] output;
