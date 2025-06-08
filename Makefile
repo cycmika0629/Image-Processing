@@ -1,4 +1,4 @@
-# ompiler & Linker settings
+# Compiler & Linker settings
 CXX = g++
 
 CXXFLAGS = -I ./inc -I ./inc/filters -I ./bit_field_filter \

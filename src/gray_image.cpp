@@ -10,7 +10,7 @@ using namespace std;
     }
     delete[] pixels;
   }
-}
+  }
 
   bool GrayImage::LoadImage(string filename){
     Data_Loader loader;
@@ -33,4 +33,3 @@ using namespace std;
     display.Display_Gray_ASCII(width, height, pixels);
     return;
   }
-  /*void GrayImage::Display_CMD();*/
