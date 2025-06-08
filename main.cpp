@@ -12,6 +12,7 @@
 #include <sstream>
 #include <chrono>
 #include <fstream>
+#include <functional>
 
 using namespace std;
 
@@ -26,41 +27,7 @@ void LogFilterUse(const string& image_name, const string& filter_info, const str
   log.close();
 }
 
-void GaussianInteractivePreview(Image* img, int img_type, const string& original_name, int display_mode) {
-  if (!img) return;
-
-  string output_name = "preview_gaussian.jpg";
-  while (true) {
-    float sigma;
-    cout << "[GAUSSIAN] Enter sigma value (0 to exit): ";
-    cin >> sigma;
-    if (sigma == 0) break;
-
-    if (img_type == 1)
-      ApplyGrayGaussian(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
-    else
-      ApplyRGBGaussian(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
-
-    img->DumpImage(output_name);
-    if (display_mode == 1) img->Display_X_Server();
-    else if (display_mode == 2) img->Display_ASCII();
-
-    cout << "[INFO] Applied Gaussian(sigma=" << sigma << ") → " << output_name << endl;
-    LogFilterUse(original_name, "Gaussian(sigma=" + to_string(sigma) + ")", output_name);
-  }
-}
-
 int main() {
-  map<string, FilterType> filter_map = {
-    {"flip", FILTER_FLIP},
-    {"mosaic", FILTER_MOSAIC},
-    {"gaussian", FILTER_GAUSSIAN},
-    {"laplacian", FILTER_LAPLACIAN},
-    {"fisheye", FILTER_FISHEYE},
-    {"swirl", FILTER_SWIRL},
-    {"cartoon", FILTER_CARTOON}
-  };
-
   while (true) {
     string img_name;
     int img_type;
@@ -105,158 +72,65 @@ int main() {
       continue;
     }
 
-    if (img_type == 2) {
-      int choice;
-      cout << "[INPUT] Do you want to use (1) Filter or (2) Encryption? ";
-      cin >> choice;
-      if (choice == 2) {
-        RGBImage* rimg = dynamic_cast<RGBImage*>(img);
-        ImageEncryption crypto;
-        int op;
-        cout << "[INPUT] Enter 1 to encrypt or 2 to decrypt: ";
-        cin >> op;
-        cin.ignore();
-        if (op == 1) {
-          string msg;
-          cout << "[INPUT] Enter message to encrypt: ";
-          getline(cin, msg);
-          RGBImage* encrypted = crypto.Encrypt(msg, rimg);
-          encrypted->DumpImage("Image-Folder/encrypted_img.png");
-          if (display_mode == 1) encrypted->Display_X_Server();
-          else if (display_mode == 2) encrypted->Display_ASCII();
-          LogFilterUse(img_name, "Encrypt(message)", "encrypted_img.png");
-          delete encrypted;
-        } else if (op == 2) {
-          string msg = crypto.Decrypt(rimg);
-          cout << "[INFO] Decrypted message: " << msg << endl;
-          LogFilterUse(img_name, "Decrypt(message)", "<from current image>");
-        }
-        delete img;
-        continue;
-      }
-    }
-
-    int filter_type;
-    cout << "[INPUT] Choose filter:\n"
-         << "1: Flip\n2: Mosaic\n3: Gaussian\n4: Laplacian\n5: FishEye\n"
-         << "6: Swirl\n7: Cartoon\n8: Gaussian Interactive Preview\n9: Custom Sequence\n>> ";
-    cin >> filter_type;
+    int filter_flags;
+    cout << "[INPUT] Enter filter flags as sum (e.g., Flip(1)+Gaussian(4)=5):\n"
+         << "1: Flip | 2: Mosaic | 4: Gaussian | 8: Laplacian | 16: FishEye | 32: Swirl | 64: Cartoon\n>> ";
+    cin >> filter_flags;
 
     string output_name = "img_filtered.jpg";
-    string log_info;
+    string log_info = "BitField Filters: ";
 
-    switch (filter_type) {
-      case 1:
-        if (img_type == 1) ApplyGrayHorizontalFlip(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        else ApplyRGBHorizontalFlip(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        log_info = "Flip";
-        break;
-      case 2: {
-        int b; cout << "[INPUT] Mosaic block size: "; cin >> b;
-        if (img_type == 1) ApplyGrayMosaic(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), b);
-        else ApplyRGBMosaic(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), b);
-        log_info = "Mosaic(block=" + to_string(b) + ")";
-        break;
-      }
-      case 3: {
-        float sigma; cout << "[INPUT] Gaussian sigma: "; cin >> sigma;
-        if (img_type == 1) ApplyGrayGaussian(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
-        else ApplyRGBGaussian(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), sigma);
-        log_info = "Gaussian(sigma=" + to_string(sigma) + ")";
-        break;
-      }
-      case 4:
-        if (img_type == 1) ApplyGrayLaplacian(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        else ApplyRGBLaplacian(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        log_info = "Laplacian";
-        break;
-      case 5:
-        if (img_type == 1) ApplyGrayFisheye(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        else ApplyRGBFisheye(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        log_info = "Fisheye";
-        break;
-      case 6: { 
-        double factor;
-        cout << "[INPUT] Swirl distortion factor (0.01~0.15): ";
-        cin >> factor;
+    if (img_type == 1) {
+      auto g = dynamic_cast<GrayImage*>(img);
+      filter_handlers = {
+        {FILTER_FLIP,      [&]() { ApplyGrayHorizontalFlip(g->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_MOSAIC,    [&]() {
+          int b; cout << "  [Mosaic] block size? "; cin >> b;
+          ApplyGrayMosaic(g->get_pixels(), img->get_width(), img->get_height(), b);
+        }},
+        {FILTER_GAUSSIAN,  [&]() {
+          float s; cout << "  [Gaussian] sigma? "; cin >> s;
+          ApplyGrayGaussian(g->get_pixels(), img->get_width(), img->get_height(), s);
 
-        if (img_type == 1)
-            ApplyGraySwirl(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), factor);
-        else
-            ApplyRGBSwirl(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), factor);
+        }},
+        {FILTER_LAPLACIAN, [&]() { ApplyGrayLaplacian(g->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_FISHEYE,   [&]() { ApplyGrayFisheye(g->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_SWIRL,     [&]() { ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_CARTOON,   [&]() { ApplyGrayCartoon(g->get_pixels(), img->get_width(), img->get_height()); }}
+      };
+    } else {
+      auto r = dynamic_cast<RGBImage*>(img);
+      filter_handlers = {
+        {FILTER_FLIP,      [&]() { ApplyRGBHorizontalFlip(r->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_MOSAIC,    [&]() {
+          int b; cout << "  [Mosaic] block size? "; cin >> b;
+          ApplyRGBMosaic(r->get_pixels(), img->get_width(), img->get_height(), b);
+        }},
+        {FILTER_GAUSSIAN,  [&]() {
+          float s; cout << "  [Gaussian] sigma? "; cin >> s;
+          ApplyRGBGaussian(r->get_pixels(), img->get_width(), img->get_height(), s);
+        }},
+        {FILTER_LAPLACIAN, [&]() { ApplyRGBLaplacian(r->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_FISHEYE,   [&]() { ApplyRGBFisheye(r->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_SWIRL,     [&]() { ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_CARTOON,   [&]() { ApplyRGBCartoon(r->get_pixels(), img->get_width(), img->get_height()); }}
+      };
+    }
 
-        log_info = "Swirl(factor=" + to_string(factor) + ")";
-        break;
-      }
-      case 7:
-        if (img_type == 1) ApplyGrayCartoon(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        else ApplyRGBCartoon(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        log_info = "Cartoon";
-        break;
-      case 8:
-        GaussianInteractivePreview(img, img_type, img_name, display_mode);
-        delete img;
-        continue;
-      case 9: {
-        cin.ignore();
-        string sequence;
-        cout << "[INPUT] Enter filter sequence (e.g. flip|mosaic:8|gaussian:1.2): ";
-        getline(cin, sequence);
-
-        vector<string> filters;
-        stringstream ss(sequence);
-        string token;
-        while (getline(ss, token, '|')) {
-          filters.push_back(token);
+    for (auto& [flag, func] : filter_handlers) {
+      if (filter_flags & flag) {
+        func();
+        switch (flag) {
+          case FILTER_FLIP:      log_info += "Flip "; break;
+          case FILTER_MOSAIC:    log_info += "Mosaic "; break;
+          case FILTER_GAUSSIAN:  log_info += "Gaussian "; break;
+          case FILTER_LAPLACIAN: log_info += "Laplacian "; break;
+          case FILTER_FISHEYE:   log_info += "Fisheye "; break;
+          case FILTER_SWIRL:     log_info += "Swirl "; break;
+          case FILTER_CARTOON:   log_info += "Cartoon "; break;
+          default: break;
         }
-
-        for (const string& f : filters) {
-          string name, param;
-          size_t colon = f.find(':');
-          if (colon != string::npos) {
-            name = f.substr(0, colon);
-            param = f.substr(colon + 1);
-          } else name = f;
-
-          if (!filter_map.count(name)) {
-            cerr << "[WARN] Unsupported filter: " << name << endl;
-            continue;
-          }
-
-          FilterType type = filter_map[name];
-          if (img_type == 1) {
-            GrayImage* g = dynamic_cast<GrayImage*>(img);
-            switch (type) {
-              case FILTER_FLIP: ApplyGrayHorizontalFlip(g->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_MOSAIC: ApplyGrayMosaic(g->get_pixels(), img->get_width(), img->get_height(), stoi(param)); break;
-              case FILTER_GAUSSIAN: ApplyGrayGaussian(g->get_pixels(), img->get_width(), img->get_height(), stof(param)); break;
-              case FILTER_LAPLACIAN: ApplyGrayLaplacian(g->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_FISHEYE: ApplyGrayFisheye(g->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_SWIRL: ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height(), stod(param)); break;
-              case FILTER_CARTOON: ApplyGrayCartoon(g->get_pixels(), img->get_width(), img->get_height()); break;
-              default: break;
-            }
-          } else {
-            RGBImage* r = dynamic_cast<RGBImage*>(img);
-            switch (type) {
-              case FILTER_FLIP: ApplyRGBHorizontalFlip(r->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_MOSAIC: ApplyRGBMosaic(r->get_pixels(), img->get_width(), img->get_height(), stoi(param)); break;
-              case FILTER_GAUSSIAN: ApplyRGBGaussian(r->get_pixels(), img->get_width(), img->get_height(), stof(param)); break;
-              case FILTER_LAPLACIAN: ApplyRGBLaplacian(r->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_FISHEYE: ApplyRGBFisheye(r->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_SWIRL: ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height(), stod(param)); break;
-              case FILTER_CARTOON: ApplyRGBCartoon(r->get_pixels(), img->get_width(), img->get_height()); break;
-              default: break;
-            }
-          }
-        }
-        log_info = "Custom Sequence: " + sequence;
-        break;
       }
-      default:
-        cerr << "[ERROR] Invalid filter number." << endl;
-        delete img;
-        continue;
     }
 
     img->DumpImage(output_name);
@@ -269,4 +143,3 @@ int main() {
 
   return 0;
 }
-

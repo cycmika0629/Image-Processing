@@ -358,184 +358,84 @@
 → Applied: Laplacian
 → Output: img_filtered.jpg
 ---------------------------------------
-[Fri Jun  6 01:35:26 2025
-] Image: 1-1.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 01:36:01 2025
-] Image: 1-1.jpg
-→ Applied: Flip
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 01:43:45 2025
-] Image: 1-2.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 01:43:51 2025
-] Image: 1-2.jpg
-→ Applied: Flip
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:06:51 2025
-] Image: 2-1.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:07:12 2025
-] Image: 2-1.jpg
-→ Applied: Mosaic(block=5)
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:08:01 2025
-] Image: 2-2.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:08:27 2025
-] Image: 2-2.jpg
-→ Applied: Mosaic(block=5)
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:08:39 2025
-] Image: 2-2.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:08:55 2025
-] Image: 2-2.jpg
-→ Applied: Mosaic(block=10)
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:14:52 2025
+[Sun Jun  8 14:09:36 2025
 ] Image: 3-1.jpg
 → Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Fri Jun  6 02:15:40 2025
+[Sun Jun  8 14:09:49 2025
 ] Image: 3-1.jpg
-→ Applied: Gaussian(sigma=5.000000)
+→ Applied: Gaussian(sigma=4.000000)
 → Output: img_filtered.jpg
 ---------------------------------------
-[Fri Jun  6 02:16:43 2025
-] Image: 3-2.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:16:55 2025
-] Image: 3-2.jpg
-→ Applied: Gaussian(sigma=5.000000)
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:19:32 2025
-] Image: 4-1.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:19:40 2025
-] Image: 4-1.jpg
-→ Applied: Laplacian
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:20:47 2025
-] Image: 4-2.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:20:52 2025
-] Image: 4-2.jpg
-→ Applied: Laplacian
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:23:12 2025
-] Image: lena.jpg
-→ Applied: Initial GUI display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 02:23:40 2025
-] Image: lena.jpg
-→ Applied: Fisheye
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 02:26:00 2025
+[Sun Jun  8 14:14:40 2025
 ] Image: 3-1.jpg
 → Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Fri Jun  6 02:26:20 2025
+[Sun Jun  8 14:14:51 2025
 ] Image: 3-1.jpg
-→ Applied: Swirl
+→ Applied: Gaussian(sigma=4.000000)
 → Output: img_filtered.jpg
 ---------------------------------------
-[Fri Jun  6 02:28:54 2025
-] Image: 2-2.jpg
+[Sun Jun  8 14:18:28 2025
+] Image: 3-1.jpg
 → Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Fri Jun  6 02:29:15 2025
-] Image: 2-2.jpg
-→ Applied: Cartoon
+[Sun Jun  8 14:18:35 2025
+] Image: 3-1.jpg
+→ Applied: Gaussian(sigma=4.000000)
 → Output: img_filtered.jpg
 ---------------------------------------
-[Fri Jun  6 13:56:57 2025
+[Sun Jun  8 15:12:39 2025
 ] Image: 3-1.jpg
-→ Applied: Initial ASCII display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 13:57:28 2025
-] Image: 3-1.jpg
-→ Applied: Flip
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 13:57:59 2025
-] Image: 3-1.jpg
-→ Applied: Initial ASCII display
-→ Output: img.jpg
----------------------------------------
-[Fri Jun  6 13:58:43 2025
-] Image: 3-1.jpg
-→ Applied: Fisheye
-→ Output: img_filtered.jpg
----------------------------------------
-[Fri Jun  6 13:59:20 2025
-] Image: 3-2.jpg
 → Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Fri Jun  6 13:59:50 2025
-] Image: 3-2.jpg
-→ Applied: Cartoon
+[Sun Jun  8 15:13:00 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
 → Output: img_filtered.jpg
 ---------------------------------------
-[Sun Jun  8 10:35:06 2025
-] Image: 1-1.jpg
-→ Applied: Initial ASCII display
+[Sun Jun  8 15:33:46 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Sun Jun  8 10:35:15 2025
-] Image: 1-1.jpg
-→ Applied: Flip
+[Sun Jun  8 15:33:52 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
 → Output: img_filtered.jpg
 ---------------------------------------
-[Sun Jun  8 10:42:06 2025
-] Image: 1-1.jpg
-→ Applied: Initial ASCII display
+[Sun Jun  8 15:41:03 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Sun Jun  8 10:42:09 2025
-] Image: 1-1.jpg
-→ Applied: Flip
+[Sun Jun  8 15:41:09 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
 → Output: img_filtered.jpg
 ---------------------------------------
-[Sun Jun  8 10:47:51 2025
-] Image: 1-1.jpg
-→ Applied: Initial ASCII display
+[Sun Jun  8 15:48:00 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
-[Sun Jun  8 10:48:12 2025
-] Image: 1-1.jpg
-→ Applied: Mosaic(block=10)
+[Sun Jun  8 15:48:06 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:50:43 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:50:49 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
 → Output: img_filtered.jpg
 ---------------------------------------
 [Sun Jun  8 15:25:18 2025
