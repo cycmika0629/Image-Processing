@@ -438,3 +438,33 @@
 → Applied: BitField Filters: Gaussian 
 → Output: img_filtered.jpg
 ---------------------------------------
+[Sun Jun  8 20:46:45 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 20:46:51 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 20:47:27 2025
+] Image: 2-2.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 20:47:33 2025
+] Image: 2-2.jpg
+→ Applied: BitField Filters: Swirl 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 21:45:19 2025
+] Image: 2-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 21:45:28 2025
+] Image: 2-1.jpg
+→ Applied: BitField Filters: Swirl 
+→ Output: img_filtered.jpg
+---------------------------------------

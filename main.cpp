@@ -93,7 +93,12 @@ int main() {
         }},
         {FILTER_LAPLACIAN, [&]() { ApplyGrayLaplacian(g->get_pixels(), img->get_width(), img->get_height()); }},
         {FILTER_FISHEYE,   [&]() { ApplyGrayFisheye(g->get_pixels(), img->get_width(), img->get_height()); }},
-        {FILTER_SWIRL,     [&]() { ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_SWIRL, [&]() {
+          float extent; cout << "  [Swirl] extent (recommended 0.01 ~ 0.05): "; cin >> extent;
+          ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height(), extent);
+        }},
+
+
         {FILTER_CARTOON,   [&]() { ApplyGrayCartoon(g->get_pixels(), img->get_width(), img->get_height()); }}
       };
     } else {
@@ -110,7 +115,12 @@ int main() {
         }},
         {FILTER_LAPLACIAN, [&]() { ApplyRGBLaplacian(r->get_pixels(), img->get_width(), img->get_height()); }},
         {FILTER_FISHEYE,   [&]() { ApplyRGBFisheye(r->get_pixels(), img->get_width(), img->get_height()); }},
-        {FILTER_SWIRL,     [&]() { ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_SWIRL, [&]() {
+          float extent; cout << "  [Swirl] extent (recommended 0.01 ~ 0.05): "; cin >> extent;
+          ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height(), extent);
+        }},
+
+
         {FILTER_CARTOON,   [&]() { ApplyRGBCartoon(r->get_pixels(), img->get_width(), img->get_height()); }}
       };
     }
