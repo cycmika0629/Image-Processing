@@ -29,6 +29,7 @@ void LogFilterUse(const string& image_name, const string& filter_info, const str
 
 int main() {
   while (true) {
+    
     string img_name;
     int img_type;
     cout << "[INPUT] Image type? (1: Gray / 2: RGB / 0: Exit): ";
@@ -72,6 +73,59 @@ int main() {
       continue;
     }
 
+    if (img_type == 2) {  // Only support RGB for now
+      auto rgb_img = dynamic_cast<RGBImage*>(img);
+      ImageEncryption crypt;
+
+      int crypto_choice;
+      cout << "[INPUT] Encryption option? (0: None / 1: Encrypt / 2: Decrypt): ";
+      cin >> crypto_choice;
+
+      if (crypto_choice == 1) {
+        string message;
+        cout << "  [Encrypt] Enter message to embed: ";
+        cin.ignore(); // Flush newline
+        getline(cin, message);
+        rgb_img = crypt.Encrypt(message, rgb_img);
+        if (!rgb_img) {
+          cerr << "[ERROR] Encryption failed, image pointer is null!" << endl;
+        } else {
+          rgb_img->DumpImage("Image-Folder/img_encrypted.png"); 
+          cout << "[INFO] Encrypted image saved as Image-Folder/img_encrypted.png" << endl;
+        }   
+        delete img;
+        continue;  
+      } else if (crypto_choice == 2) {
+        if (!rgb_img || !rgb_img->get_pixels()) {
+          cerr << "[ERROR] Image data is invalid or empty." << endl;
+          delete img;
+          continue;
+        }
+
+        try {
+          ImageEncryption crypt;
+          string extracted = crypt.Decrypt(rgb_img);
+
+          if (extracted.empty()) {
+            cerr << "[WARNING] No message could be extracted. Is the image really encrypted?" << endl;
+          } else {
+            cout << "[INFO] Decrypted message: " << extracted << endl;
+
+            // Draw black text on image and save it
+            rgb_img->DrawTextOnImage(extracted, "Image-Folder/img_decrypted_labeled.png");
+            cout << "[INFO] Decrypted message saved to Image-Folder/img_decrypted_labeled.png" << endl;
+          }
+        } catch (const exception& e) {
+          cerr << "[ERROR] Decryption failed with exception: " << e.what() << endl;
+        } catch (...) {
+          cerr << "[ERROR] Decryption failed due to an unknown error." << endl;
+        }
+
+        delete img;
+        continue;
+    }    
+    }
+
     int filter_flags;
     cout << "[INPUT] Enter filter flags as sum (e.g., Flip(1)+Gaussian(4)=5):\n"
          << "1: Flip | 2: Mosaic | 4: Gaussian | 8: Laplacian | 16: FishEye | 32: Swirl | 64: Cartoon\n>> ";
@@ -95,7 +149,12 @@ int main() {
         }},
         {FILTER_LAPLACIAN, [&]() { ApplyGrayLaplacian(g->get_pixels(), img->get_width(), img->get_height()); }},
         {FILTER_FISHEYE,   [&]() { ApplyGrayFisheye(g->get_pixels(), img->get_width(), img->get_height()); }},
-        {FILTER_SWIRL,     [&]() { ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_SWIRL, [&]() {
+          float extent; cout << "  [Swirl] extent (recommended 0.01 ~ 0.05): "; cin >> extent;
+          ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height(), extent);
+        }},
+
+
         {FILTER_CARTOON,   [&]() { ApplyGrayCartoon(g->get_pixels(), img->get_width(), img->get_height()); }}
       };
     } else {
@@ -112,7 +171,12 @@ int main() {
         }},
         {FILTER_LAPLACIAN, [&]() { ApplyRGBLaplacian(r->get_pixels(), img->get_width(), img->get_height()); }},
         {FILTER_FISHEYE,   [&]() { ApplyRGBFisheye(r->get_pixels(), img->get_width(), img->get_height()); }},
-        {FILTER_SWIRL,     [&]() { ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height()); }},
+        {FILTER_SWIRL, [&]() {
+          float extent; cout << "  [Swirl] extent (recommended 0.01 ~ 0.05): "; cin >> extent;
+          ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height(), extent);
+        }},
+
+
         {FILTER_CARTOON,   [&]() { ApplyRGBCartoon(r->get_pixels(), img->get_width(), img->get_height()); }}
       };
     }

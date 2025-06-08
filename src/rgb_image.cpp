@@ -1,4 +1,22 @@
 #include "rgb_image.h"
+#include "CImg.h"
+using namespace cimg_library;
+
+void RGBImage::DrawTextOnImage(const std::string& text, const std::string& out_filename) {
+  // Convert raw int*** pixels to CImg<unsigned char>
+  CImg<unsigned char> img(width, height, 1, 3);
+  for (int y = 0; y < height; ++y)
+    for (int x = 0; x < width; ++x)
+      for (int c = 0; c < 3; ++c)
+        img(x, y, 0, c) = static_cast<unsigned char>(pixels[y][x][c]);
+
+  // Draw text
+  const unsigned char color[] = { 255, 0, 0 }; // Red
+  img.draw_text(10, 10, text.c_str(), color, 0, 1.0f, 32);
+
+  // Save as PNG
+  img.save_png(out_filename.c_str());
+}
 
 RGBImage:: RGBImage() : Image(0,0), pixels(nullptr){}
 
