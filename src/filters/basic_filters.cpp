@@ -49,62 +49,67 @@ T clamp(T val, T lo, T hi) {
 void ApplyGrayGaussian(int** pixels, int width, int height, float sigma){
   int k = std::ceil(3 * sigma);
   int size = 2 * k + 1;
+
+  // Allocate kernel
   float **kernel = new float*[size];
-  for (int i = 0; i < size; ++i){
+  for (int i = 0; i < size; ++i)
     kernel[i] = new float[size];
-  }
+
   float sum = 0.0;
   for (int i = -k; i <= k ; ++i){
     for (int j = -k; j <= k; ++j){
-      float g = std::exp(-(i * i + j * j) / (sigma * sigma));
+      float g = std::exp(-(i * i + j * j) / (2 * sigma * sigma));
       g /= (2 * M_PI * sigma * sigma);
-      kernel[i+k][j+k] = g;
+      kernel[i + k][j + k] = g;
       sum += g;
     }
   }
-  for (int i = 0; i < size; ++i){
-    for (int j = 0; j < size; ++j){
-      kernel[i][j] /= sum;
-    }
-  }
 
-  int ** output = new int*[height];
-  for (int i = 0; i < height; ++i){
+  // Normalize kernel
+  for (int i = 0; i < size; ++i)
+    for (int j = 0; j < size; ++j)
+      kernel[i][j] /= sum;
+
+  // Allocate output buffer
+  int** output = new int*[height];
+  for (int i = 0; i < height; ++i)
     output[i] = new int[width];
-  }
+
+  // Convolve
   for (int y = 0; y < height; ++y){
     for (int x = 0; x < width; ++x){
       float val = 0.0;
-      for (int i = -k; i < k; ++i){
-        for (int j = -k; j < k; ++j){
-          int yy = clamp((y + i), 0, height - 1);
-          int xx = clamp((x + j), 0, width - 1);
-          val += pixels[yy][xx] * kernel[i+k][j+k];
+      for (int i = -k; i <= k; ++i){
+        for (int j = -k; j <= k; ++j){
+          int yy = clamp(y + i, 0, height - 1);
+          int xx = clamp(x + j, 0, width - 1);
+          val += pixels[yy][xx] * kernel[i + k][j + k];
         }
       }
-      output[y][x] = clamp((int)(val + 0.5f), 0, 255);
+      output[y][x] = clamp(static_cast<int>(val + 0.5f), 0, 255);
     }
   }
 
-  for (int i = 0; i < height; ++i){
-    for (int j = 0; j < width; ++j){
-      pixels[i][j] = output[i][j];
+  // Copy result back to pixels
+  for (int y = 0; y < height; ++y){
+    for (int x = 0; x < width; ++x){
+      pixels[y][x] = output[y][x];
     }
   }
 
-  for (int i = 0; i < size; ++i){
+  // Cleanup
+  for (int i = 0; i < size; ++i)
     delete[] kernel[i];
-  }
   delete[] kernel;
 
-  for (int i = 0; i < height; ++i){
+  for (int i = 0; i < height; ++i)
     delete[] output[i];
-  }
   delete[] output;
 }
 
+
 void ApplyGrayLaplacian(int** pixels, int width, int height){
-  if (width < 3 || height < 3) return;  // 避免處理過小圖像
+  if (width < 3 || height < 3) return;  
 
   // Laplacian kernel
   int K[3][3] = {{-1, -1, -1}, {-1, 9, -1}, {-1, -1, -1}};
@@ -114,7 +119,7 @@ void ApplyGrayLaplacian(int** pixels, int width, int height){
   for(int i = 0; i < height; ++i){
     output[i] = new int[width];
     for(int j = 0; j < width; ++j){
-      output[i][j] = pixels[i][j];  // 先填入原值，避免邊界未初始化
+      output[i][j] = pixels[i][j];  
     }
   }
 
@@ -233,8 +238,8 @@ void ApplyRGBGaussian(int*** pixels, int width, int height, float sigma){
     for (int x = 0; x < width; ++x){
       for (int c = 0; c < 3; ++c){
         float val = 0.0;
-        for (int i = -k; i < k; ++i){
-          for (int j = -k; j < k; ++j){
+        for (int i = -k; i <= k; ++i){
+          for (int j = -k; j <= k; ++j){
             int yy = clamp((y + i), 0, height - 1);
             int xx = clamp((x + j), 0, width - 1);
             val += pixels[yy][xx][c] * kernel[i+k][j+k][c];

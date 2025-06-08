@@ -3,14 +3,15 @@ using namespace std;
 
   GrayImage::GrayImage(): Image(0, 0), pixels(nullptr){}
   GrayImage::GrayImage(int w, int h, int **p): Image(w, h), pixels(p){}
-  GrayImage::~GrayImage(){
-    if (pixels){
-      for (int i = 0; i < width; i++){
-        delete[] pixels[i];
-      }
-      delete[] pixels;
+  GrayImage::~GrayImage() {
+  if (pixels) {
+    for (int i = 0; i < height; i++) { 
+      delete[] pixels[i];
     }
+    delete[] pixels;
   }
+}
+
   bool GrayImage::LoadImage(string filename){
     Data_Loader loader;
     pixels = loader.Load_Gray(filename, &width, &height);

@@ -358,3 +358,83 @@
 → Applied: Laplacian
 → Output: img_filtered.jpg
 ---------------------------------------
+[Sun Jun  8 14:09:36 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 14:09:49 2025
+] Image: 3-1.jpg
+→ Applied: Gaussian(sigma=4.000000)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 14:14:40 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 14:14:51 2025
+] Image: 3-1.jpg
+→ Applied: Gaussian(sigma=4.000000)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 14:18:28 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 14:18:35 2025
+] Image: 3-1.jpg
+→ Applied: Gaussian(sigma=4.000000)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:12:39 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:13:00 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:33:46 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:33:52 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:41:03 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:41:09 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:48:00 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:48:06 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:50:43 2025
+] Image: 3-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:50:49 2025
+] Image: 3-1.jpg
+→ Applied: BitField Filters: Gaussian 
+→ Output: img_filtered.jpg
+---------------------------------------
