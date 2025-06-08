@@ -8,3 +8,13 @@
 → Applied: Initial GUI display
 → Output: img.jpg
 ---------------------------------------
+[Sun Jun  8 23:20:24 2025
+] Image: lena.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 23:21:58 2025
+] Image: img_encrypted.png
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
