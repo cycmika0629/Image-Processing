@@ -68,20 +68,46 @@ RGBImage* ImageEncryption::Encrypt(string message, RGBImage* img){
   return new RGBImage(w,h,p);
 }
 
-string ImageEncryption::Decrypt(RGBImage* img){
+string ImageEncryption::Decrypt(RGBImage* img) {
+  if (!img || !img->get_pixels()) return "";
+
   vector<bool> bits;
   int*** p = img->get_pixels();
   int h = img->get_height();
   int w = img->get_width();
-  
-  for(int i = 0; i < h; ++i){
-    for(int j = 0; j < w; ++j){
-      for(int c = 0; c < 3; ++c)
+
+  int total_pixels = h * w * 3;
+  if (total_pixels < 32) return "";
+
+  for (int i = 0; i < h; ++i) {
+    for (int j = 0; j < w; ++j) {
+      for (int c = 0; c < 3; ++c)
         bits.push_back(p[i][j][c] & 1);
     }
   }
-  
-  return BitsToString(bits);
+
+  // Read length from the first 32 bits
+  int len = 0;
+  for (int i = 0; i < 32; ++i) {
+    len = (len << 1) | bits[i];
+  }
+
+  int expected_total_bits = 32 + len * 8;
+  if (expected_total_bits > bits.size()) {
+    return "";  // message length exceeds available bits → invalid
+  }
+
+  string msg = "";
+  for (int i = 0; i < len; ++i) {
+    char c = 0;
+    for (int j = 0; j < 8; ++j) {
+      c = (c << 1) | bits[32 + i * 8 + j];
+    }
+    msg += c;
+  }
+
+  return msg;
 }
+
 
  
