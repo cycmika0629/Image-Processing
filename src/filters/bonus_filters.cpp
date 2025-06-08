@@ -94,10 +94,9 @@ void ApplyRGBFisheye(int ***pixels, int width, int height){
 }
 
 // ======== Swirl ========
-void ApplyGraySwirl(int **pixels, int width, int height) {
+void ApplyGraySwirl(int **pixels, int width, int height, double factor) {
   int cx = width / 2;
   int cy = height / 2;
-  double factor = 0.01;
 
   // Copy pixels safely to avoid modifying during iteration
   vector<vector<int>> temp(height, vector<int>(width, 0));
@@ -123,10 +122,9 @@ void ApplyGraySwirl(int **pixels, int width, int height) {
 }
 
 
-void ApplyRGBSwirl(int ***pixels, int width, int height) {
+void ApplyRGBSwirl(int ***pixels, int width, int height, double factor) {
   int cx = width / 2;
-  int cy = height / 2;
-  double factor = 0.01; 
+  int cy = height / 2; 
 
   int ***p = new int**[height];
   for (int i = 0; i < height; ++i) {

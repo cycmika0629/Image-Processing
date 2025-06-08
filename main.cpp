@@ -100,7 +100,9 @@ int main() {
       img->Display_ASCII();
       LogFilterUse(img_name, "Initial ASCII display", "img.jpg");
     } else {
-      cout << "[WARN] Unknown display mode. Skipping initial display.\n";
+      cout << "[WARN] Unknown display mode.\n";
+      delete img;
+      continue;
     }
 
     if (img_type == 2) {
@@ -173,11 +175,19 @@ int main() {
         else ApplyRGBFisheye(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
         log_info = "Fisheye";
         break;
-      case 6:
-        if (img_type == 1) ApplyGraySwirl(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        else ApplyRGBSwirl(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
-        log_info = "Swirl";
+      case 6: { 
+        double factor;
+        cout << "[INPUT] Swirl distortion factor (0.01~0.15): ";
+        cin >> factor;
+
+        if (img_type == 1)
+            ApplyGraySwirl(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height(), factor);
+        else
+            ApplyRGBSwirl(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height(), factor);
+
+        log_info = "Swirl(factor=" + to_string(factor) + ")";
         break;
+      }
       case 7:
         if (img_type == 1) ApplyGrayCartoon(dynamic_cast<GrayImage*>(img)->get_pixels(), img->get_width(), img->get_height());
         else ApplyRGBCartoon(dynamic_cast<RGBImage*>(img)->get_pixels(), img->get_width(), img->get_height());
@@ -222,7 +232,7 @@ int main() {
               case FILTER_GAUSSIAN: ApplyGrayGaussian(g->get_pixels(), img->get_width(), img->get_height(), stof(param)); break;
               case FILTER_LAPLACIAN: ApplyGrayLaplacian(g->get_pixels(), img->get_width(), img->get_height()); break;
               case FILTER_FISHEYE: ApplyGrayFisheye(g->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_SWIRL: ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height()); break;
+              case FILTER_SWIRL: ApplyGraySwirl(g->get_pixels(), img->get_width(), img->get_height(), stod(param)); break;
               case FILTER_CARTOON: ApplyGrayCartoon(g->get_pixels(), img->get_width(), img->get_height()); break;
               default: break;
             }
@@ -234,7 +244,7 @@ int main() {
               case FILTER_GAUSSIAN: ApplyRGBGaussian(r->get_pixels(), img->get_width(), img->get_height(), stof(param)); break;
               case FILTER_LAPLACIAN: ApplyRGBLaplacian(r->get_pixels(), img->get_width(), img->get_height()); break;
               case FILTER_FISHEYE: ApplyRGBFisheye(r->get_pixels(), img->get_width(), img->get_height()); break;
-              case FILTER_SWIRL: ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height()); break;
+              case FILTER_SWIRL: ApplyRGBSwirl(r->get_pixels(), img->get_width(), img->get_height(), stod(param)); break;
               case FILTER_CARTOON: ApplyRGBCartoon(r->get_pixels(), img->get_width(), img->get_height()); break;
               default: break;
             }

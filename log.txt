@@ -538,3 +538,58 @@
 → Applied: Mosaic(block=10)
 → Output: img_filtered.jpg
 ---------------------------------------
+[Sun Jun  8 15:25:18 2025
+] Image: 1-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:25:32 2025
+] Image: 1-1.jpg
+→ Applied: Swirl(factor=0.080000)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:25:44 2025
+] Image: 1-1.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:25:56 2025
+] Image: 1-1.jpg
+→ Applied: Swirl(factor=0.010000)
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:27:56 2025
+] Image: 1-1.jpg
+→ Applied: Initial ASCII display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:29:12 2025
+] Image: 1-1.jpg
+→ Applied: Custom Sequence: filp|swirl:0.01
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:32:20 2025
+] Image: 1-1.jpg
+→ Applied: Custom Sequence: 
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:38:36 2025
+] Image: 3-2.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:39:45 2025
+] Image: 3-2.jpg
+→ Applied: Custom Sequence: flip|swirl 0.01
+→ Output: img_filtered.jpg
+---------------------------------------
+[Sun Jun  8 15:40:46 2025
+] Image: 3-2.jpg
+→ Applied: Initial GUI display
+→ Output: img.jpg
+---------------------------------------
+[Sun Jun  8 15:41:21 2025
+] Image: 3-2.jpg
+→ Applied: Custom Sequence: flip|swirl:0.01
+→ Output: img_filtered.jpg
+---------------------------------------
